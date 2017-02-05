@@ -1,0 +1,17 @@
+html {
+	height:100%;
+	width: 100%;
+}
+body {
+	font-family: "Arial";
+	font-size:12px;
+	height: 100%;
+	width: 100%;
+	overflow:hidden;
+	background-color: red;
+
+}
+
+h2 {
+	color: blue;
+}

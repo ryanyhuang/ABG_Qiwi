@@ -7,11 +7,41 @@ body {
 	font-size:12px;
 	height: 100%;
 	width: 100%;
-	overflow:hidden;
-	background-color: red;
+	background-color: lightgray;
+		margin: 0;
+	padding: 0;
 
 }
 
-h2 {
+.screen {
 	color: blue;
+	border: 2px solid black;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	overflow:scroll;
+}
+
+
+.song {
+	border: 2px solid black;
+	text-align: left;
+	padding-left: 1%;
+	
+}
+
+.tab {
+	margin: 0;
+	left: 0;
+	border: 1px solid black;
+	width: 49%;
+	height: 50px;
+	display:inline;
+}
+
+ul {
+	list-style-type:none;
+	padding-left: 0;
 }

@@ -45,12 +45,45 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('test1clicked', function(data){
 		console.log(data);
+		console.log("got here");
 	});
 
 	socket.on('test2clicked', function(data, fn){
 		console.log("do something else");
 		fn();
 	});
+
+	socket.on('searchChanged', function(data, fn){
+		console.log("searched for " + data);
+		var retTracks = [];
+
+        spotifyApi.searchTracks("album:" + data, { 'limit': 5 })
+            .then(function(res) {
+            
+                console.log("Looking up Songs by " + data + ": " + '\n');
+                  
+                
+				for (var i = 0; i < 5; i++) {
+					var songInfo = {
+						album: res.body.tracks.items[i].album.name,
+						song: res.body.tracks.items[i].name,
+						artist: res.body.tracks.items[i].artists[0].name
+					};
+
+					retTracks.push(songInfo);
+
+				}
+
+				console.log(retTracks);
+        		fn(retTracks);
+
+
+            }, function(err) {
+            	console.error("error happened");
+                console.error(err);
+            });
+
+    });
 
 	/*
 	 * when a commanded is entered, execute it as a child process
@@ -74,12 +107,5 @@ io.sockets.on('connection', function(socket){
 
 
 server.listen(process.env.PORT || 3000);
-
-spotifyApi.searchTracks('Side to side')
-  .then(function(data) {
-    console.log('Search by "Love"', data.body.tracks.items[0].album.images);
-  }, function(err) {
-    console.error(err);
-  });
 
 module.exports = app;

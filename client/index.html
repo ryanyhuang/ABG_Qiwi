@@ -12,9 +12,33 @@
 
 <body>
 
-        <h1>greetings</h1>
+        <div class="screen" id="passcode">
+                <button id="enter"> go </button>
+        </div>
+
+        <div id="tabs">
+                <button class="tab" id="searchTab">Search</button>
+                <button class="tab" id="queueTab">Queue</button>
+        </div>
+
+        <div class="screen" id="searchscreen">
+                search
+        	<form id="entry">
+        		<input type="text" id="search" autocomplete="off" />
+                        <button id="clearbutton">clear</button>
+        	</form>
+
+        	<div id="searchRes">
+                    
+                </div>
+        </div>
+
+        <div class="screen" id="queue">queue</div>
+
+
         <div id="content"></div>
 
         <script src="js/build/bundle.js"></script>
+
 
 </body>

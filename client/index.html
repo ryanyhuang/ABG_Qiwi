@@ -11,21 +11,28 @@
 </head>
 
 <body>
-
         <div class="screen" id="passcode">
-                <button id="enter"> go </button>
-        </div>
 
-        <div id="tabs">
-                <button class="tab" id="searchTab">Search</button>
-                <button class="tab" id="queueTab">Queue</button>
+                <div id="code">
+                        <form id="passcode_input"> 
+
+                                <input id="box1" type="number" class="box"/>
+
+                                <input id="box2" type="number" class="box"/>
+
+                                <input id="box3" type="number" class="box"/>
+
+                                <input id="box4" type="number" class="box"/>  
+
+                        </form>
+                        <button id="joinButton" type="button"> Join the Party! </button>
+                </div>
         </div>
 
         <div class="screen" id="searchscreen">
                 search
         	<form id="entry">
         		<input type="text" id="search" autocomplete="off" />
-                        <button id="clearbutton">clear</button>
         	</form>
 
         	<div id="searchRes">
@@ -35,8 +42,15 @@
 
         <div class="screen" id="queue">queue</div>
 
+        <div id="tabs">
+                <button class="tab" id="searchTab" onclick="$('#searchscreen').show();
+                                $('#queue').hide();">Search</button>
+                <button class="tab" id="queueTab" onclick="$('#queue').show();
+                                $('#searchscreen').hide();">Queue</button>
+        </div>
 
         <div id="content"></div>
+
 
         <script src="js/build/bundle.js"></script>
 

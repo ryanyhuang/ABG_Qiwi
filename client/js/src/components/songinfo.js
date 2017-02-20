@@ -11,6 +11,7 @@ export class SongInfo extends Component {
 
 	clicked (){
 		var info = this.props.info;
+		this.props.cb(info);
 		alert (info.song + " added");
 		this.setState({show: false});
 	}
@@ -20,6 +21,7 @@ export class SongInfo extends Component {
 
 		return (
 			<li className="song">
+				<img src={this.props.info.art}/>
 		  		<h1>{this.props.info.song}</h1>
 		  		<p>{this.props.info.artist} - {this.props.info.album}</p>
 

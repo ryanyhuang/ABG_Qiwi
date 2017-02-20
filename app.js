@@ -2,6 +2,7 @@
 var express = require('express');
 var path = require('path');
 var http = require('http');
+var fs = require('fs');
 
 var app = express();
 
@@ -37,53 +38,58 @@ var spotifyApi = new SpotifyWebApi({
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-const exec = require('child_process').exec;
-
 //sockets listening
 io.sockets.on('connection', function(socket){
 	console.log('user connected');
 
-	socket.on('test1clicked', function(data){
-		console.log(data);
-		console.log("got here");
-	});
-
-	socket.on('test2clicked', function(data, fn){
-		console.log("do something else");
-		fn();
-	});
-
 	socket.on('searchChanged', function(data, fn){
-		console.log("searched for " + data);
+		
 		var retTracks = [];
 
         spotifyApi.searchTracks("album:" + data, { 'limit': 5 })
-            .then(function(res) {
-            
-                console.log("Looking up Songs by " + data + ": " + '\n');
-                  
+            .then(function(res) {                  
                 
 				for (var i = 0; i < 5; i++) {
+					//if(res==undefined) continue;
+					//if(res.body.tracks.item[i] == undefined) continue;
 					var songInfo = {
 						album: res.body.tracks.items[i].album.name,
 						song: res.body.tracks.items[i].name,
-						artist: res.body.tracks.items[i].artists[0].name
+						artist: res.body.tracks.items[i].artists[0].name,
+						id: res.body.tracks.items[i].id,
+						art: res.body.tracks.items[i].album.images[2].url
+
 					};
 
 					retTracks.push(songInfo);
 
 				}
 
-				console.log(retTracks);
         		fn(retTracks);
 
 
             }, function(err) {
             	console.error("error happened");
                 console.error(err);
-            });
+            }
+        );
 
     });
+
+    socket.on('verifyPass', function(data, fn){
+    	if(data == 1234){
+    		fn(true);
+    	}
+  		else {
+  			fn(false);
+  		}
+    });
+
+
+   	socket.on('addSong', function(data){
+   		console.log("adding song: %s", data.song);
+   		console.log("with the id: %s", data.id);
+   	});
 
 	/*
 	 * when a commanded is entered, execute it as a child process

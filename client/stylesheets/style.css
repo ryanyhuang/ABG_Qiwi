@@ -32,7 +32,7 @@ body {
 .screen {
 	font-family: "Monaco";
 	color: black;
-	border: 2px solid black;
+	border-top: 2px solid black;
 	height: 85%;
 	width: 100%;
 	margin: 0;
@@ -50,7 +50,7 @@ body {
 }
 
 .searchbar{
-	border: 2px solid black;
+	border-bottom: 2px solid black;
 	background-color: #2C4758;
 
 }
@@ -193,37 +193,8 @@ li {
 
 
 
-.tracks {
-  display: flex;
-  flex-flow: column wrap;
-  font-family:'Montserrat';
-  font-weight:200;
-}
 
-.tracks__heading {
-  color: #c9c9c9;
-  height: 42px;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-}
 
-.tracks__heading__number {
-  margin-left: 10px;
-  
-}
-
-.tracks__heading__title {
-  margin-left: 70px;
-  width: 45%;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.tracks__heading__length {
-  margin-left: auto;
-  font-size: 20px;
-}
 
 .tracks .track {
   border-top: 1px solid #40698c;
@@ -234,6 +205,8 @@ li {
   flex-flow: row wrap;
   align-items: center;
   background: #345470;
+  font-family:'Montserrat';
+  font-weight:200;
 }
 
 .tracks .track:hover {
@@ -256,13 +229,12 @@ li {
 }
 
 .tracks .track__title {
-  width: 45%;
+  width: 30%;
   margin-left: 10px;
   color: white;
   text-align: left;
 
 }
-
 
 .tracks .track__length {
   margin-left: auto;
@@ -279,6 +251,6 @@ li {
 }
 .tracks .track__status {
  /*margin-left: auto;*/
- margin-right: 52px;
+ margin-right: 2%;
  color: #aaaaaa;
 }

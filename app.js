@@ -46,10 +46,10 @@ io.sockets.on('connection', function(socket){
 		
 		var retTracks = [];
 
-        spotifyApi.searchTracks("album:" + data, { 'limit': 5 })
+        spotifyApi.searchTracks("album:" + data, { 'limit': 15 })
             .then(function(res) {                  
                 
-				for (var i = 0; i < 5; i++) {
+				for (var i = 0; i < 15; i++) {
 					//if(res==undefined) continue;
 					//if(res.body.tracks.item[i] == undefined) continue;
 					var songInfo = {

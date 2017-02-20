@@ -72,11 +72,20 @@ body {
 ul {
 	list-style-type:none;
 	padding-left: 0;
+	margin:0;
+	padding:0;
+}
+
+li {
+	list-style-type:none;
+
+	margin: 0;
+	padding: 0;
 }
 
 
+
 #passcode {
-	padding-top: 30%;
 }
 
 .box {
@@ -128,6 +137,7 @@ ul {
 }
 
 
+/*search bar fanciness*/
 .searchbar input {
 	outline: none;
 	margin: 9px;
@@ -167,7 +177,6 @@ ul {
 	box-shadow: 0 0 10px rgba(109,207,246,.5);
 }
 
-
 .searchbar input:-moz-placeholder {
 	color: #999;
 }
@@ -187,11 +196,12 @@ ul {
 .tracks {
   display: flex;
   flex-flow: column wrap;
-  margin-bottom: 15px;
+  font-family:'Montserrat';
+  font-weight:200;
 }
 
 .tracks__heading {
-  color: #aaaaaa;
+  color: #c9c9c9;
   height: 42px;
   display: flex;
   flex-flow: row wrap;
@@ -200,7 +210,7 @@ ul {
 
 .tracks__heading__number {
   margin-left: 10px;
-  font-style: italic;
+  
 }
 
 .tracks__heading__title {
@@ -215,28 +225,23 @@ ul {
   font-size: 20px;
 }
 
-.tracks__heading__popularity {
-  font-size: 20px;
-  margin-left: 55px;
-  padding-right: 10px;
-}
-
 .tracks .track {
-  border-top: 1px solid #282828;
+  border-top: 1px solid #40698c;
+  border-left: 1px solid #40698c;
+  border-right: 1px solid #40698c;
   height: 42px;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin :0;
-  padding: 0;
+  background: #345470;
 }
 
 .tracks .track:hover {
-  background: #282828;
+  background: #40698c;
 }
 
 .tracks .track:last-child {
-  border-bottom: 1px solid #282828;
+  border-bottom: 1px solid #40698c;
 }
 
 .tracks .track__art img {
@@ -250,94 +255,30 @@ ul {
   width: 12px;
 }
 
-.tracks .track__added {
-  margin-left: 30px;
-  color: #c8c8c8;
-}
-
-.tracks .track__added .added {
-  color: #c8c8c8;
-}
-
-.tracks .track__added .not-added {
-  color: #aaaaaa;
-}
-
 .tracks .track__title {
   width: 45%;
-  margin-left: 30px;
+  margin-left: 10px;
   color: white;
+  text-align: left;
+
 }
 
-.tracks .track__title.featured .title:after {
-  content: "-";
-  margin: 0 5px;
-}
-
-.tracks .track__title.featured .feature {
-  color: #aaaaaa;
-}
-
-.tracks .track__title.featured .feature:after {
-  content: ",";
-  margin-right: 5px;
-}
-
-.tracks .track__title.featured .feature:last-child:after {
-  content: "";
-  margin-right: 0;
-}
-
-.tracks .track__title.featured .feature:hover {
-  cursor: pointer;
-  color: #c8c8c8;
-  text-decoration: underline;
-}
-
-.tracks .track__explicit .label {
-  border: 1px;
-  border-style: solid;
-  border-color: #424242;
-  color: #424242;
-  text-transform: uppercase;
-}
-
-.tracks .track__plays {
-  color: #aaaaaa;
-  margin-left: auto;
-  padding-right: 10px;
-}
 
 .tracks .track__length {
   margin-left: auto;
+  
   color: #aaaaaa;
 }
 
-.tracks .track__popularity {
-  margin-left: 46px;
-  padding-right: 10px;
-  font-size: 20px;
+.tracks .track__divider {
+  /*margin-left: auto;*/
+  margin-right: 10px;
+  margin-left: 10px;
   color: #aaaaaa;
+
 }
-
-@media (max-width: 1200px) {
-  .tracks__heading__title {
-    width: auto;
-  }
-
-  .tracks__heading__popularity {
-    display: none;
-  }
-
-  .tracks .track__title {
-    width: auto !important;
-  }
-
-  .tracks .track__explicit {
-    display: none;
-  }
-
-  .tracks .track__popularity {
-    display: none;
-  }
+.tracks .track__status {
+ /*margin-left: auto;*/
+ margin-right: 52px;
+ color: #aaaaaa;
 }

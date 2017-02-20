@@ -93,12 +93,12 @@ var doSearch = function(search){
 }
 
 var samptracks = (
-	<div>
+	<ul class="sampletracks">
 		<SampleTrack/>
 		<SampleTrack/>
 		<SampleTrack/>
 		<SampleTrack/>
-	</div>
+	</ul>
 
 	);
 ReactDOM.render(samptracks, document.getElementById('queueRes'));

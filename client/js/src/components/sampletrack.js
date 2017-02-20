@@ -30,38 +30,35 @@ export class SampleTrack extends Component {
 		return (
 			<li>
 
-		  		<div className="tracks">
+				<div className="tracks">
 
-				  <div className="track">
+					<div className="track">
 
-				    <div className="track__art">
+						<div className="track__art">
 
-				      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/whenDarkOut.jpg" alt="When It's Dark Out" />
+							<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/whenDarkOut.jpg" alt="When It's Dark Out" />
 
-				    </div>
+						</div>
 
-				    <div className="track__number">1</div>
+					<div className="track__number">1</div>
 
-				    <div className="track__added">
+					<div className="track__title">Intro</div>
 
-				      <i className="ion-checkmark-round added"></i>
+					<div className="track__length">1:11</div>
 
-				    </div>
+					<div className="track__divider">|</div>
 
-				    <div className="track__title">Me, Myself & I</div>
+						<div className="track__status">
 
-				    <div className="track__explicit">
+							<span className="label">Playing Now</span>
 
-				      <span className="label">Explicit</span>
+						</div>
 
-				    </div>
-
-				    <div className="track__plays">147,544,165</div>
-
-				  </div>
+					</div>
 
 				</div>
-		  	</li>
+
+			</li>
 		);
 	}
 }

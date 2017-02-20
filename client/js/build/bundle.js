@@ -103,8 +103,8 @@ var doSearch = function doSearch(search) {
 };
 
 var samptracks = _react2['default'].createElement(
-	'div',
-	null,
+	'ul',
+	{ 'class': 'sampletracks' },
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
@@ -226,27 +226,27 @@ var SampleTrack = (function (_Component) {
 						),
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__added" },
-							_react2["default"].createElement("i", { className: "ion-checkmark-round added" })
-						),
-						_react2["default"].createElement(
-							"div",
 							{ className: "track__title" },
-							"Me, Myself & I"
+							"Intro"
 						),
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__explicit" },
+							{ className: "track__length" },
+							"1:11"
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__divider" },
+							"|"
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__status" },
 							_react2["default"].createElement(
 								"span",
 								{ className: "label" },
-								"Explicit"
+								"Playing Now"
 							)
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__plays" },
-							"147,544,165"
 						)
 					)
 				)
@@ -381,26 +381,56 @@ var SongInfo = (function (_Component) {
 		value: function render() {
 			if (!this.state.show) return _react2["default"].createElement("li", null);
 
+			/*
+   <img src={this.props.info.art}/>
+     		<h1>{this.props.info.song}</h1>
+     		<p>{this.props.info.artist} - {this.props.info.album}</p>
+   	  		<button onClick={this.clicked.bind(this)}>Add</button>
+   */
+
 			return _react2["default"].createElement(
 				"li",
-				{ className: "song" },
-				_react2["default"].createElement("img", { src: this.props.info.art }),
+				null,
 				_react2["default"].createElement(
-					"h1",
-					null,
-					this.props.info.song
-				),
-				_react2["default"].createElement(
-					"p",
-					null,
-					this.props.info.artist,
-					" - ",
-					this.props.info.album
-				),
-				_react2["default"].createElement(
-					"button",
-					{ onClick: this.clicked.bind(this) },
-					"Add"
+					"div",
+					{ className: "tracks" },
+					_react2["default"].createElement(
+						"div",
+						{ className: "track" },
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__art" },
+							_react2["default"].createElement("img", { src: this.props.info.art })
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__title" },
+							this.props.info.song
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__length" },
+							this.props.info.artist
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__divider" },
+							"|"
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__status" },
+							_react2["default"].createElement(
+								"span",
+								{ className: "label" },
+								_react2["default"].createElement(
+									"button",
+									{ onClick: this.clicked.bind(this) },
+									"Add"
+								)
+							)
+						)
+					)
 				)
 			);
 		}

@@ -3,20 +3,37 @@ html {
 	width: 100%;
 }
 body {
-	font-family: "Arial";
 	font-size:12px;
 	height: 100%;
 	width: 100%;
-	background-color: lightgray;
-		margin: 0;
+	margin: 0;
 	padding: 0;
+	font-family: "Monaco";
+	text-align: center;
+	overflow:hidden;
+}
 
+
+#header {
+    font-family: 'Lobster';
+    font-size: 20px;
+    text-align: center; 
+    color: #02B3E4;
+
+    height: 5%;
+}
+#header p{
+	margin-top: 10px;
+}
+body {
+    background-color: #2c475e;
 }
 
 .screen {
-	color: blue;
+	font-family: "Monaco";
+	color: black;
 	border: 2px solid black;
-	height: 80%;
+	height: 85%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
@@ -32,16 +49,295 @@ body {
 	
 }
 
+.searchbar{
+	border: 2px solid black;
+	background-color: #2C4758;
+
+}
+
+#tabs{
+	height: 10%;
+
+}
+
 .tab {
 	margin: 0;
 	left: 0;
 	border: 1px solid black;
-	width: 49%;
-	height: 50px;
 	display:inline;
+	height: 100%;
+	width: 49%;
 }
 
 ul {
 	list-style-type:none;
 	padding-left: 0;
+}
+
+
+#passcode {
+	padding-top: 30%;
+}
+
+.box {
+	font-family: "Monaco";
+	position: relative;
+	display: inline;
+	height: 50px;
+	width: 50px;
+	font-size: 32px;
+	text-align: center;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+#id input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+ 
+#id input[type="number"] {
+    -moz-appearance: textfield;
+} 
+
+/* CSS for the join room button */
+#joinButton {
+	font-family: "Monaco";
+	font-size: 20px;
+	margin-top: 15px;
+	text-align: center;
+	padding: 5px 15px;
+	background-color: #F5F5F5;
+	border-radius: 18px;
+	cursor: pointer;
+	-webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    border: 2px solid;
+}
+
+#joinButton:hover {
+    background-color: #555555;
+    color: #E0FFFF;
+    border-color: #555555;
+}
+
+#joinButton:focus {
+	outline: none;
+	background-color: #555555;
+    color: #E0FFFF;
+    border-color: #555555;
+}
+
+
+.searchbar input {
+	outline: none;
+	margin: 9px;
+}
+.searchbar input[type=search] {
+	-webkit-appearance: textfield;
+	-webkit-box-sizing: content-box;
+	font-family: inherit;
+	font-size: 100%;
+}
+.searchbar input::-webkit-search-decoration,
+.searchbar input::-webkit-search-cancel-button {
+	display: none; 
+}
+
+.searchbar input[type=search] {
+	background: #ededed url(http://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+	border: solid 1px #ccc;
+	padding: 9px 10px 9px 32px;
+	width: 50%;
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+.searchbar input[type=search]:focus {
+	width: 78%;
+	background-color: #fff;
+	border-color: #02B3E4;
+	
+	-webkit-box-shadow: 0 0 10px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 10px rgba(109,207,246,.5);
+	box-shadow: 0 0 10px rgba(109,207,246,.5);
+}
+
+
+.searchbar input:-moz-placeholder {
+	color: #999;
+}
+.searchbar input::-webkit-input-placeholder {
+	color: #999;
+}
+
+
+
+
+
+
+
+
+
+
+.tracks {
+  display: flex;
+  flex-flow: column wrap;
+  margin-bottom: 15px;
+}
+
+.tracks__heading {
+  color: #aaaaaa;
+  height: 42px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.tracks__heading__number {
+  margin-left: 10px;
+  font-style: italic;
+}
+
+.tracks__heading__title {
+  margin-left: 70px;
+  width: 45%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tracks__heading__length {
+  margin-left: auto;
+  font-size: 20px;
+}
+
+.tracks__heading__popularity {
+  font-size: 20px;
+  margin-left: 55px;
+  padding-right: 10px;
+}
+
+.tracks .track {
+  border-top: 1px solid #282828;
+  height: 42px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin :0;
+  padding: 0;
+}
+
+.tracks .track:hover {
+  background: #282828;
+}
+
+.tracks .track:last-child {
+  border-bottom: 1px solid #282828;
+}
+
+.tracks .track__art img {
+  width: 42px;
+  height: 42px;
+}
+
+.tracks .track__number {
+  margin-left: 10px;
+  color: #aaaaaa;
+  width: 12px;
+}
+
+.tracks .track__added {
+  margin-left: 30px;
+  color: #c8c8c8;
+}
+
+.tracks .track__added .added {
+  color: #c8c8c8;
+}
+
+.tracks .track__added .not-added {
+  color: #aaaaaa;
+}
+
+.tracks .track__title {
+  width: 45%;
+  margin-left: 30px;
+  color: white;
+}
+
+.tracks .track__title.featured .title:after {
+  content: "-";
+  margin: 0 5px;
+}
+
+.tracks .track__title.featured .feature {
+  color: #aaaaaa;
+}
+
+.tracks .track__title.featured .feature:after {
+  content: ",";
+  margin-right: 5px;
+}
+
+.tracks .track__title.featured .feature:last-child:after {
+  content: "";
+  margin-right: 0;
+}
+
+.tracks .track__title.featured .feature:hover {
+  cursor: pointer;
+  color: #c8c8c8;
+  text-decoration: underline;
+}
+
+.tracks .track__explicit .label {
+  border: 1px;
+  border-style: solid;
+  border-color: #424242;
+  color: #424242;
+  text-transform: uppercase;
+}
+
+.tracks .track__plays {
+  color: #aaaaaa;
+  margin-left: auto;
+  padding-right: 10px;
+}
+
+.tracks .track__length {
+  margin-left: auto;
+  color: #aaaaaa;
+}
+
+.tracks .track__popularity {
+  margin-left: 46px;
+  padding-right: 10px;
+  font-size: 20px;
+  color: #aaaaaa;
+}
+
+@media (max-width: 1200px) {
+  .tracks__heading__title {
+    width: auto;
+  }
+
+  .tracks__heading__popularity {
+    display: none;
+  }
+
+  .tracks .track__title {
+    width: auto !important;
+  }
+
+  .tracks .track__explicit {
+    display: none;
+  }
+
+  .tracks .track__popularity {
+    display: none;
+  }
 }

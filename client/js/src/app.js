@@ -4,10 +4,11 @@ import ReactDOM from 'react';
 import {SearchBar} from './components/searchbar.js';
 import {TestComp} from './components/testcomponent.js';
 import {SongInfo} from './components/songinfo.js';
+import {SampleTrack} from './components/sampletrack.js';
 
 var socket = io.connect('http://localhost:3000');
 
-var roomId = 0000;
+var roomId = 0;
 
 $(document).ready(function() {
 
@@ -91,11 +92,25 @@ var doSearch = function(search){
 	);
 }
 
-var addSong = function(song){
-	console.log(song.song);
-	console.log(song.id);
+var samptracks = (
+	<div>
+		<SampleTrack/>
+		<SampleTrack/>
+		<SampleTrack/>
+		<SampleTrack/>
+	</div>
 
-	socket.emit('addSong', song);
+	);
+ReactDOM.render(samptracks, document.getElementById('queueRes'));
+
+var addSong = function(song){
+	var addObject = {
+		name: song.song,
+		id: song.id,
+		room: roomId
+	}
+
+	socket.emit('addSong', addObject);
 }
 
 /*sends passcode to backend where it is verified*/

@@ -87,8 +87,9 @@ io.sockets.on('connection', function(socket){
 
 
    	socket.on('addSong', function(data){
-   		console.log("adding song: %s", data.song);
+   		console.log("adding song: %s", data.name);
    		console.log("with the id: %s", data.id);
+   		console.log("from the room: %s", data.room);
    	});
 
 	/*

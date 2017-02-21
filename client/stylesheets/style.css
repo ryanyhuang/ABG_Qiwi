@@ -13,7 +13,10 @@ body {
 	overflow:hidden;
 }
 
-
+::-webkit-scrollbar { 
+    display: none; 
+}
+button:focus {outline:0 !important;}
 #header {
     font-family: 'Lobster';
     font-size: 20px;
@@ -62,8 +65,8 @@ body {
 
 .tab {
 	margin: 0;
+	padding: 0;
 	left: 0;
-	border: 1px solid black;
 	display:inline;
 	height: 100%;
 	width: 49%;

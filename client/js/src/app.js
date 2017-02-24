@@ -10,6 +10,8 @@ var socket = io.connect('http://localhost:3000');
 
 var roomId = 0;
 
+var screen = "search";
+
 $(document).ready(function() {
 
 	$('#box1').focus();
@@ -44,6 +46,10 @@ $(document).ready(function() {
 	$('#queue').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
+
+	$('#circlebutton').click(function(){
+		switchScreen();
+	});
 
 	//to be replace with passcode features
 	$('#joinButton').click(function(event){
@@ -93,7 +99,7 @@ var doSearch = function(search){
 }
 
 var samptracks = (
-	<ul class="sampletracks">
+	<ul>
 		<SampleTrack/>
 		<SampleTrack/>
 		<SampleTrack/>
@@ -141,5 +147,27 @@ var enterRoom = function(){
 	$('#tabs').show();
 	$('#searchscreen').show();
 }
+
+var switchScreen = function(){
+	if(screen == "search"){
+		screen = "feed";
+		$('#searchscreen').hide();
+        $('#queue').show();
+        $('#buttonval').html('S');
+	} else {
+		screen = "search";
+		$('#searchscreen').show();
+        $('#queue').hide();
+        $('#buttonval').html('F');
+
+	}
+}
+
+
+
+
+
+
+
 
 

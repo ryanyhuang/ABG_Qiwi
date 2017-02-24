@@ -21,6 +21,8 @@ var socket = io.connect('http://localhost:3000');
 
 var roomId = 0;
 
+var screen = "search";
+
 $(document).ready(function () {
 
 	$('#box1').focus();
@@ -53,6 +55,10 @@ $(document).ready(function () {
 	$('#queue').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
+
+	$('#circlebutton').click(function () {
+		switchScreen();
+	});
 
 	//to be replace with passcode features
 	$('#joinButton').click(function (event) {
@@ -104,7 +110,7 @@ var doSearch = function doSearch(search) {
 
 var samptracks = _react2['default'].createElement(
 	'ul',
-	{ 'class': 'sampletracks' },
+	null,
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
@@ -145,6 +151,20 @@ var enterRoom = function enterRoom() {
 	$('#passcode').hide();
 	$('#tabs').show();
 	$('#searchscreen').show();
+};
+
+var switchScreen = function switchScreen() {
+	if (screen == "search") {
+		screen = "feed";
+		$('#searchscreen').hide();
+		$('#queue').show();
+		$('#buttonval').html('S');
+	} else {
+		screen = "search";
+		$('#searchscreen').show();
+		$('#queue').hide();
+		$('#buttonval').html('F');
+	}
 };
 
 },{"./components/sampletrack.js":2,"./components/searchbar.js":3,"./components/songinfo.js":4,"./components/testcomponent.js":5,"react":161}],2:[function(require,module,exports){
@@ -419,14 +439,14 @@ var SongInfo = (function (_Component) {
 						),
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__status" },
+							{ className: "track__reqbutton" },
 							_react2["default"].createElement(
 								"span",
 								{ className: "label" },
 								_react2["default"].createElement(
 									"button",
 									{ onClick: this.clicked.bind(this) },
-									"Add"
+									"Request"
 								)
 							)
 						)

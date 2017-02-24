@@ -46,9 +46,9 @@ export class SongInfo extends Component {
 
 					<div className="track__divider">|</div>
 
-						<div className="track__status">
+						<div className="track__reqbutton">
 
-							<span className="label"><button onClick={this.clicked.bind(this)}>Add</button></span>
+							<span className="label"><button onClick={this.clicked.bind(this)}>Request</button></span>
 
 						</div>
 

@@ -21,17 +21,18 @@ functions android:
 -make new room
 */
 
-function verifyPasscode(passcode){
-	firebase.database().ref('/parties').once('value').then(function(snapshot) {
+function verifyPasscode(){
+	firebase.database().ref('/').once('value').then(function(snapshot) {
 		var passcodes = snapshot.val();
 		console.log(passcodes);
+		/*
 		if(passcodes.hasOwnProperty(passcode)){
 	  		console.log("%s is a valid passcode", passcode);
 
 		} else {
 	  		console.log("%s is not a valid passcode", passcode);
 
-		}
+		}*/
 		/*
 	  	if(passcodes.indexOf(passcode) != -1){
 	  	} else {
@@ -40,6 +41,8 @@ function verifyPasscode(passcode){
 	});
 
 }
+
+verifyPasscode();
 
 /*
 verifyPasscode(1234);
@@ -79,12 +82,23 @@ function writeUserData(userId, name, email, imageUrl) {
   console.log("success");
 }
 
+function makeSongs(){
+	firebase.database().ref('/').set(
+		{key: "value2"}
+
+	);
+}
+/*
 var updates = {
 	1234: { key:'val'}
 };
 
-firebase.database().ref('/parties/').update(updates);
+firebase.database().ref('/parties/').update(updates);*/
 //writeUserData("1234", "ryan", "ryh", "wot");
+
+makeSongs();
+
+
 
 
 

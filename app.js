@@ -60,7 +60,7 @@ io.sockets.on('connection', function(socket){
 						art: res.body.tracks.items[i].album.images[2].url
 
 					};
-
+					console.log("name: %s, id: %s", songInfo.song, songInfo.id);
 					retTracks.push(songInfo);
 
 				}

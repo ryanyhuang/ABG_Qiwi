@@ -111,9 +111,10 @@ ReactDOM.render(samptracks, document.getElementById('queueRes'));
 
 var addSong = function(song){
 	var addObject = {
-		name: song.song,
-		id: song.id,
-		room: roomId
+		song_name: song.song,
+		song_id: song.id,
+		room: roomId,
+		user: "ryan" //to be replaced with cookie 
 	}
 
 	socket.emit('addSong', addObject);

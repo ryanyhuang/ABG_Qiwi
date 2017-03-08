@@ -34,6 +34,20 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 //=========================================================
+var firebase = require("firebase");
+
+var config = {
+    apiKey: "AIzaSyAsPT8glXqwLVhWhFYCziwS--d6p-Aowkw",
+    authDomain: "qiwi-abg.firebaseapp.com",
+    databaseURL: "https://qiwi-abg.firebaseio.com",
+    storageBucket: "qiwi-abg.appspot.com"
+  };
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var database = firebase.database();
+
+//=========================================================
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
@@ -77,19 +91,56 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('verifyPass', function(data, fn){
-    	if(data == 1234){
-    		fn(true);
-    	}
-  		else {
-  			fn(false);
-  		}
+    	var passcode = data;
+
+		firebase.database().ref('/parties').once('value').then(function(snapshot) {
+			var passcodes = snapshot.val();
+			
+			if(passcodes.hasOwnProperty(passcode)){
+		  		fn(true);
+
+			} else {
+		  		fn(false);
+
+			}
+
+		});
+
     });
 
 
    	socket.on('addSong', function(data){
-   		console.log("adding song: %s", data.name);
-   		console.log("with the id: %s", data.id);
+   		console.log("adding song: %s", data.song_name);
+   		console.log("with the id: %s", data.song_id);
    		console.log("from the room: %s", data.room);
+   		console.log("from the user: %s", data.user);
+
+
+   		var songRequest = data;
+
+		var roomurl = 'parties/' + songRequest.room;
+		firebase.database().ref(roomurl).once('value').then(function(snapshot) {
+			var room_requests_list = snapshot.val().request_list_id;
+			console.log(room_requests_list);
+
+			var songlisturl = 'songlists/' + room_requests_list + '/songs/';
+			console.log(songlisturl);
+			firebase.database().ref(songlisturl).once('value').then(function(snapshot2) {
+				console.log(snapshot2.val());
+				var newarr = snapshot2.val();
+				var req = {
+					requester: songRequest.user,
+					songId: songRequest.song_id,
+					status: 'valid'
+				}
+
+				newarr.push(req);
+
+				firebase.database().ref(songlisturl).set(newarr);
+
+			});
+
+		});
    	});
 
 	/*

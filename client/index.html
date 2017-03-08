@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset = "utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>test</title>
+	<meta name ="viewport" content  = "width=device-width">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link href='stylesheets/style.css' rel = "stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+        <div id="header">
+                <p>Ripple</p>
+        </div>
+
+
+
+        <div id="passcode">
+
+                <h1>Welcome to Ripple!</h1>
+                <h2 id="prompt">Enter the 4-digit code:</h2>
+
+                <div id="code">
+                        <form id="passcode_input"> 
+
+                                <input id="box1" type="number" class="box"/>
+
+                                <input id="box2" type="number" class="box"/>
+
+                                <input id="box3" type="number" class="box"/>
+
+                                <input id="box4" type="number" class="box"/>  
+
+                        </form>
+                        <button id="joinButton" type="button"> Join the Party! </button>
+                </div>
+        </div>
+
+        <div class="screen" id="searchscreen">
+                
+                <div class="searchbar">
+                        <form id="entry">
+                                <input id="search" type="search" placeholder="Search"/>
+                        </form>
+
+                </div>
+        	<div id="searchRes"> </div>
+        </div>
+
+        <div class="screen" id="queue">
+
+                <div id="queueRes">
+                    
+                </div>
+        </div>
+
+        <!--div id="circlebutton">
+                <h1 id="buttonval">F</h1>
+        </div-->
+
+        <ul id="tabs">
+                <li>
+                        <button class="tab" id="searchTab" onclick="$('#searchscreen').show();
+                                $('#queue').hide();">Search</button>
+                </li>
+                <li>
+                        <button class="tab" id="queueTab" onclick="$('#queue').show();
+                                $('#searchscreen').hide();">Queue</button>
+                </li>
+        </ul>
+
+
+
+        <script src="js/build/bundle.js"></script>
+
+
+</body>

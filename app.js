@@ -147,6 +147,7 @@ io.sockets.on('connection', function(socket){
 			
 			if(!usernotifs.hasOwnProperty(data.user)){
 				console.log("new user!");
+
 				var notif = {
 					status: 'Accepted',
 					song_name: "First Notification!",
@@ -157,7 +158,7 @@ io.sockets.on('connection', function(socket){
 
 				var newarr = [];
 				newarr.push(notif);
-				firebase.database().ref('notifications/').child(user).set(newarr);
+				firebase.database().ref('notifications/').child(data.user).set(newarr);
 
 			} else {
 				console.log("existing user");

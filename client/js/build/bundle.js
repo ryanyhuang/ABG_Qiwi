@@ -17,7 +17,8 @@ var _componentsSonginfoJs = require('./components/songinfo.js');
 
 var _componentsSampletrackJs = require('./components/sampletrack.js');
 
-var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 

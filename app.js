@@ -141,6 +141,42 @@ io.sockets.on('connection', function(socket){
 			});
 
 		});
+
+		firebase.database().ref('notifications/').once('value').then(function(snapshot) {
+			var usernotifs = snapshot.val();
+			
+			if(!usernotifs.hasOwnProperty(data.user)){
+				console.log("new user!");
+				var notif = {
+					status: 'Accepted',
+					song_name: "First Notification!",
+					song_img: "https://i.scdn.co/image/a78a681a35c1bbf6a3c45703ce73e6d3d415af9e",
+					song_artist: "Hi",
+					song_time: "8:15 PM"
+				}
+
+				var newarr = [];
+				newarr.push(notif);
+				firebase.database().ref('notifications/').child(user).set(newarr);
+
+			} else {
+				console.log("existing user");
+			}
+
+		});
+
+
+   	});
+
+   	socket.on('getNotifs', function(data, fn){
+   		var userurl = 'notifications/' + data;
+		firebase.database().ref(userurl).once('value').then(function(snapshot) {
+			var newarr = snapshot.val();
+			console.log(newarr);
+			fn(newarr);
+
+		});
+
    	});
 
 	/*

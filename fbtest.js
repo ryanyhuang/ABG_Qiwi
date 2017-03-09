@@ -11,6 +11,23 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var database = firebase.database();
 
+var SpotifyWebApi = require('spotify-web-api-node');
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId : '7bccf322d5644ad4905b43e7d0f61f7f',
+  clientSecret : 'f29e679682c04d6b84f3e4aae6f5adae',
+  redirectUri : 'http://www.example.com/callback'
+});
+
+
+// spotifyApi.getArtistAlbums("0VFXJrXtfuX2iqlnXpl4zD")
+//   .then(function(data) {
+//     console.log('Artist albums', data.body);
+//   }, function(err) {
+//     console.error(err);
+//   });
+
 /*
 functions web:
 -verifypasscode
@@ -84,11 +101,7 @@ function addSong(songRequest){
 
 	});
 
-
-
-
 }
-
 
 var songreq = {
 	room: 1234,
@@ -96,31 +109,40 @@ var songreq = {
 	user: "1m1pedm32p"
 }
 
-addSong(songreq);
+//addSong(songreq);
 
-function formatRooms(){
-	firebase.database().ref('rooms/').set(
 
-		[
-		{
-			history: ["song1", "song2"],
-			requested: ["song3", "song4"],
-			passcode: 1234
-		},
-		{
-			history: ["song1", "song3"],
-			requested: ["song2", "song4"],
-			passcode: 4444
-		},
-		{
-			history: ["song3", "song4"],
-			requested: ["song1", "song2"],
-			passcode: 5555
-		}
-		]
-	);
-	console.log("success");
+
+function addNotif(user, notif){
+	var userurl = 'notifications/' + user;
+	firebase.database().ref(userurl).once('value').then(function(snapshot) {
+		//var newarr = [];
+		var newarr = snapshot.val();
+		newarr.push(notif);
+
+		firebase.database().ref(userurl).set(newarr);
+	});
 }
+
+var notif = {
+	status: 'Accepted',
+	song_name: "Break Yo Chest",
+	song_img: "https://i.scdn.co/image/a78a681a35c1bbf6a3c45703ce73e6d3d415af9e",
+	song_artist: "Star Cast",
+	song_time: "8:15 PM"
+}
+//addNotif("1234567890", notif);
+
+function newUserNotif(user, notif){
+	var newarr = [];
+	newarr.push(notif);
+	firebase.database().ref('notifications/').child(user).set(newarr);
+
+}
+
+newUserNotif("1234567890", notif);
+
+
 
 function writeUserData(userId, name, email, imageUrl) {
   firebase.database().ref('users/' + userId).set({

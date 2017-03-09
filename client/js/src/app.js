@@ -12,7 +12,38 @@ var roomId = 0;
 
 var screen = "search";
 
+var genCookie = function() {
+	var cookieID = "";
+	for (var i = 0; i < 10; i++) {
+		var num = Math.floor ((Math.random()*10));
+		cookieID += num.toString();
+	}
+	if (document.cookie.length == 0) {
+		document.cookie = cookieID;
+	}
+}
+
+var getCookie = function() {
+	return document.cookie;
+}
+
+var delete_cookie = function(name) {
+   document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+genCookie();
+var cook = getCookie().substring(0,10);
+
+//0162668620=; 0264571937=; 0296221873=; 3017802789=; 321094274610=; 6685739677=; 7983560417=
+//delete_cookie("321094274610");
+console.log("usercookie:%s",cook);
+
+
+
 $(document).ready(function() {
+
+
+	console.log(document.cookie.length);
 
 	$('#box1').focus();
 
@@ -86,14 +117,25 @@ var doSearch = function(search){
 	}
 	socket.emit('searchChanged', search,
 		function(tracks){
-			var addTrack = function(){
 
-			}
 			trackElems = tracks.map(function(song, i){
 				return <SongInfo key={i} info={song} cb={addSong}/>;
 			});
 
 			ReactDOM.render(<ul>{trackElems}</ul>, document.getElementById('searchRes'));
+		}
+	);
+}
+
+var updateNotifs = function(cookie){
+	var notifs = [];
+	socket.emit('getNotifs', cookie,
+		function(notifsres){
+			notifs = notifsres.map(function(notif,i){
+				return <SampleTrack key={i} info={notif}/>;
+			});
+
+			ReactDOM.render(<ul>{notifs}</ul>, document.getElementById('queueRes'));
 		}
 	);
 }
@@ -107,14 +149,14 @@ var samptracks = (
 	</ul>
 
 	);
-ReactDOM.render(samptracks, document.getElementById('queueRes'));
+//ReactDOM.render(samptracks, document.getElementById('queueRes'));
 
 var addSong = function(song){
 	var addObject = {
 		song_name: song.song,
 		song_id: song.id,
 		room: roomId,
-		user: "ryan" //to be replaced with cookie 
+		user: cook //to be replaced with cookie 
 	}
 
 	socket.emit('addSong', addObject);
@@ -155,6 +197,7 @@ var switchScreen = function(){
 		$('#searchscreen').hide();
         $('#queue').show();
         $('#buttonval').html('S');
+        updateNotifs(cook);
 	} else {
 		screen = "search";
 		$('#searchscreen').show();

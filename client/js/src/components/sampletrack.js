@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 
 export class SampleTrack extends Component {
-/*
+
 	constructor(props) {
 	    super(props);
-	    this.state = {
-	      show: true
-    	};
   	}
-
+/*
 	clicked (){
 		var info = this.props.info;
 		this.props.cb(info);
@@ -36,21 +33,20 @@ export class SampleTrack extends Component {
 
 						<div className="track__art">
 
-							<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/whenDarkOut.jpg" alt="When It's Dark Out" />
+							<img src={this.props.info.song_img} />
 
 						</div>
 
-					<div className="track__number">1</div>
 
-					<div className="track__title">Intro</div>
+					<div className="track__title">{this.props.info.song_name}</div>
 
-					<div className="track__length">1:11</div>
+					<div className="track__length">{this.props.info.song_time}</div>
 
 					<div className="track__divider">|</div>
 
 						<div className="track__status">
 
-							<span className="label">Playing Now</span>
+							<span className="label">{this.props.info.status}</span>
 
 						</div>
 

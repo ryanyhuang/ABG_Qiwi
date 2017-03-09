@@ -23,7 +23,35 @@ var roomId = 0;
 
 var screen = "search";
 
+var genCookie = function genCookie() {
+	var cookieID = "";
+	for (var i = 0; i < 10; i++) {
+		var num = Math.floor(Math.random() * 10);
+		cookieID += num.toString();
+	}
+	if (document.cookie.length == 0) {
+		document.cookie = cookieID;
+	}
+};
+
+var getCookie = function getCookie() {
+	return document.cookie;
+};
+
+var delete_cookie = function delete_cookie(name) {
+	document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
+
+genCookie();
+var cook = getCookie().substring(0, 10);
+
+//0162668620=; 0264571937=; 0296221873=; 3017802789=; 321094274610=; 6685739677=; 7983560417=
+//delete_cookie("321094274610");
+console.log("usercookie:%s", cook);
+
 $(document).ready(function () {
+
+	console.log(document.cookie.length);
 
 	$('#box1').focus();
 
@@ -95,7 +123,7 @@ var doSearch = function doSearch(search) {
 		return;
 	}
 	socket.emit('searchChanged', search, function (tracks) {
-		var addTrack = function addTrack() {};
+
 		trackElems = tracks.map(function (song, i) {
 			return _react2['default'].createElement(_componentsSonginfoJs.SongInfo, { key: i, info: song, cb: addSong });
 		});
@@ -108,6 +136,21 @@ var doSearch = function doSearch(search) {
 	});
 };
 
+var updateNotifs = function updateNotifs(cookie) {
+	var notifs = [];
+	socket.emit('getNotifs', cookie, function (notifsres) {
+		notifs = notifsres.map(function (notif, i) {
+			return _react2['default'].createElement(_componentsSampletrackJs.SampleTrack, { key: i, info: notif });
+		});
+
+		_react3['default'].render(_react2['default'].createElement(
+			'ul',
+			null,
+			notifs
+		), document.getElementById('queueRes'));
+	});
+};
+
 var samptracks = _react2['default'].createElement(
 	'ul',
 	null,
@@ -116,14 +159,14 @@ var samptracks = _react2['default'].createElement(
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
 	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null)
 );
-_react3['default'].render(samptracks, document.getElementById('queueRes'));
+//ReactDOM.render(samptracks, document.getElementById('queueRes'));
 
 var addSong = function addSong(song) {
 	var addObject = {
 		song_name: song.song,
 		song_id: song.id,
 		room: roomId,
-		user: "ryan" //to be replaced with cookie
+		user: cook //to be replaced with cookie
 	};
 
 	socket.emit('addSong', addObject);
@@ -160,6 +203,7 @@ var switchScreen = function switchScreen() {
 		$('#searchscreen').hide();
 		$('#queue').show();
 		$('#buttonval').html('S');
+		updateNotifs(cook);
 	} else {
 		screen = "search";
 		$('#searchscreen').show();
@@ -192,30 +236,23 @@ var _react2 = _interopRequireDefault(_react);
 var SampleTrack = (function (_Component) {
 	_inherits(SampleTrack, _Component);
 
-	function SampleTrack() {
+	function SampleTrack(props) {
 		_classCallCheck(this, SampleTrack);
 
-		_get(Object.getPrototypeOf(SampleTrack.prototype), "constructor", this).apply(this, arguments);
+		_get(Object.getPrototypeOf(SampleTrack.prototype), "constructor", this).call(this, props);
 	}
+
+	/*
+ 	clicked (){
+ 		var info = this.props.info;
+ 		this.props.cb(info);
+ 		alert (info.song + " added");
+ 		this.setState({show: false});
+ 	}
+ */
 
 	_createClass(SampleTrack, [{
 		key: "render",
-
-		/*
-  	constructor(props) {
-  	    super(props);
-  	    this.state = {
-  	      show: true
-      	};
-    	}
-  
-  	clicked (){
-  		var info = this.props.info;
-  		this.props.cb(info);
-  		alert (info.song + " added");
-  		this.setState({show: false});
-  	}
-  */
 		value: function render() {
 			//if(!this.state.show) return(<li></li>);
 
@@ -238,22 +275,17 @@ var SampleTrack = (function (_Component) {
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__art" },
-							_react2["default"].createElement("img", { src: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/7022/whenDarkOut.jpg", alt: "When It's Dark Out" })
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__number" },
-							"1"
+							_react2["default"].createElement("img", { src: this.props.info.song_img })
 						),
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__title" },
-							"Intro"
+							this.props.info.song_name
 						),
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__length" },
-							"1:11"
+							this.props.info.song_time
 						),
 						_react2["default"].createElement(
 							"div",
@@ -266,7 +298,7 @@ var SampleTrack = (function (_Component) {
 							_react2["default"].createElement(
 								"span",
 								{ className: "label" },
-								"Playing Now"
+								this.props.info.status
 							)
 						)
 					)

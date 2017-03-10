@@ -49,14 +49,18 @@ $(document).ready(function() {
 	$('#box1').focus();
 
 	$('.box').keydown(function(event){
-		if(event.keyCode < 48 || event.keyCode > 57){
+		console.log(event.keyCode);
+		if(event.keyCode != 8 && (event.keyCode < 48 || event.keyCode > 57)){
 			event.preventDefault();
 			return;
 		}
 	});
 
 	$('.box').keyup(function(event){
-		if(event.keyCode < 48 || event.keyCode > 57){
+		if (event.keyCode == 8) {
+			return;
+		}
+		if (event.keyCode < 48 || event.keyCode > 57){
 			event.preventDefault();
 			return;
 		}
@@ -78,6 +82,7 @@ $(document).ready(function() {
 	$('#queue').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
+	$('#circlebutton').hide()
 
 	$('#circlebutton').click(function(){
 		switchScreen();
@@ -92,6 +97,10 @@ $(document).ready(function() {
 		verifyPasscode(passcode);
 		console.log("verifying: %s", passcode);
 
+	});
+
+	$('#clear').click(function(event){
+		clearBoxes();
 	});
 
 	/*search functionality*/
@@ -174,17 +183,20 @@ var verifyPasscode = function(passcode){
 			}
 			else {
 				alert("Invalid Passcode");
-				document.getElementById('box1').value = "";
-				document.getElementById('box2').value = "";
-				document.getElementById('box3').value = "";
-				document.getElementById('box4').value = "";
-				$('#box1').focus();
+				clearBoxes();
 			}
 
 		}
 	);
 }
 
+var clearBoxes = function() {
+	for (var i = 1; i <= 4; i++) {
+		var box = "box" + i;
+		document.getElementById(box).value = "";				
+	}
+	document.getElementById("box1").focus();
+}
 /*enters room, need to add room saving functionality*/
 var enterRoom = function(){
 	$('#passcode').hide();

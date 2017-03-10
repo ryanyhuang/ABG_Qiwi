@@ -189,6 +189,7 @@ io.sockets.on('connection', function(socket){
    		var userurl = 'notifications/' + data;
 		firebase.database().ref(userurl).once('value').then(function(snapshot) {
 			var newarr = snapshot.val();
+			var newarr = newarr.reverse();
 			console.log(newarr);
 			fn(newarr);
 

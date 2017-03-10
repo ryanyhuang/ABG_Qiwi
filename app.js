@@ -151,7 +151,7 @@ io.sockets.on('connection', function(socket){
 					newarr.push(req);
 
 					var listurl = 'songlists/' + room_requests_list;
-					firebase.database().ref(listurl).child('songs')set(newarr);
+					firebase.database().ref(listurl).child('songs').set(newarr);
 
 				});
 			});

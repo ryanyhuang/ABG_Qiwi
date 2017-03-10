@@ -153,6 +153,26 @@ li {
     -moz-appearance: textfield;
 } 
 
+#clear {
+	font-family: 'Montserrat';
+	font-size: 20px;
+	font-weight: 200;
+	margin-left: 10px;
+	color: #FFFFFF;
+	text-align: center;
+	padding: 5px 13px;
+	background-color: #345470;
+	border-radius: 20px;
+	cursor: pointer;
+	-webkit-transition-duration: 0.3s;
+	    transition-duration: 0.3s;
+	    border: 2px solid;
+	    border-color: #40698c;
+	position: absolute;
+	display: inline;
+	margin-top: 10px;
+}
+
 /* CSS for the join room button */
 #joinButton {
 	font-family: 'Montserrat';

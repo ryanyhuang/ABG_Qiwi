@@ -125,12 +125,12 @@ io.sockets.on('connection', function(socket){
 			var room_requests_list = snapshot.val().request_list_id;
 			console.log(room_requests_list);
 
-			var isemptyurl = 'songlist/' + room_requests_list + "/empty";
+			var isemptyurl = 'songlists/' + room_requests_list + "/empty";
 			var isempty = false;
 
 			firebase.database().ref(isemptyurl).once('value').then(function(snapshot3){
-				console.log("snapshotvalue:%s", snapshot.val());
-				if(snapshot.val() == true) isempty = true;
+				console.log("snapshotvalue:%s", snapshot3.val());
+				if(snapshot3.val() == true) isempty = true;
 
 				var songlisturl = 'songlists/' + room_requests_list + '/songs/';
 				console.log(songlisturl);
@@ -152,6 +152,7 @@ io.sockets.on('connection', function(socket){
 
 					var listurl = 'songlists/' + room_requests_list;
 					firebase.database().ref(listurl).child('songs').set(newarr);
+					firebase.database().ref(isemptyurl).set(false);
 
 				});
 			});

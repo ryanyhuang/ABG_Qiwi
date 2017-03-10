@@ -115,31 +115,45 @@ io.sockets.on('connection', function(socket){
    		console.log("from the room: %s", data.room);
    		console.log("from the user: %s", data.user);
 
-
    		var songRequest = data;
 
 		var roomurl = 'parties/' + songRequest.room;
+
+
+
 		firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 			var room_requests_list = snapshot.val().request_list_id;
 			console.log(room_requests_list);
 
-			var songlisturl = 'songlists/' + room_requests_list + '/songs/';
-			console.log(songlisturl);
-			firebase.database().ref(songlisturl).once('value').then(function(snapshot2) {
-				console.log(snapshot2.val());
-				var newarr = snapshot2.val();
-				var req = {
-					requester: songRequest.user,
-					songId: songRequest.song_id,
-					status: 'valid'
-				}
+			var isemptyurl = 'songlist/' + room_requests_list + "/empty";
+			var isempty = false;
 
-				newarr.push(req);
+			firebase.database().ref(isemptyurl).once('value').then(function(snapshot3){
+				console.log("snapshotvalue:%s", snapshot.val());
+				if(snapshot.val() == true) isempty = true;
 
-				firebase.database().ref(songlisturl).set(newarr);
+				var songlisturl = 'songlists/' + room_requests_list + '/songs/';
+				console.log(songlisturl);
+				firebase.database().ref(songlisturl).once('value').then(function(snapshot2) {
+					console.log(snapshot2.val());
+					var newarr = [];
 
+					if(!isempty){
+						newarr = snapshot2.val();
+					}
+					
+					var req = {
+						requester: songRequest.user,
+						songId: songRequest.song_id,
+						status: 'valid'
+					}
+
+					newarr.push(req);
+
+					firebase.database().ref(songlisturl).set(newarr);
+
+				});
 			});
-
 		});
 
 		firebase.database().ref('notifications/').once('value').then(function(snapshot) {

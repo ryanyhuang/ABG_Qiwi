@@ -13,8 +13,8 @@ var _componentsSearchresultJs = require('./components/searchresult.js');
 
 var _componentsNotificationJs = require('./components/notification.js');
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -170,6 +170,20 @@ var updateNotifs = function updateNotifs(cookie) {
 };
 
 var addSong = function addSong(song) {
+	var d = new Date();
+	var hours = d.getHours();
+	var mins = d.getMinutes();
+	var timeOfDay = hours < 12 ? "AM" : "PM";
+	if (hours == 0) {
+		hours = 12;
+	} else if (hours > 12) {
+		hours = hours - 12;
+	}
+
+	var time = hours + ":" + mins + " " + timeOfDay;
+
+	console.log("time: %s", time);
+
 	var addObject = {
 		song_name: song.song_name,
 		song_id: song.song_id,
@@ -177,7 +191,8 @@ var addSong = function addSong(song) {
 		song_album: song.song_album,
 		song_artist: song.song_artist,
 		room: roomId,
-		user: cook
+		user: cook,
+		time: time
 	};
 
 	socket.emit('addSong', addObject);

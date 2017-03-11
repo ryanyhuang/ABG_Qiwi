@@ -165,8 +165,8 @@ io.sockets.on('connection', function(socket){
 				console.log("new user!");
 
 				var notif = {
-					status: 'Accepted',
-					song_name: "First Notification!",
+					status: 'Requested',
+					song_name: songRequest.song_name,
 					song_img: "https://i.scdn.co/image/a78a681a35c1bbf6a3c45703ce73e6d3d415af9e",
 					song_artist: "Hi",
 					song_time: "8:15 PM"

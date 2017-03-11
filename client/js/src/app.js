@@ -82,7 +82,7 @@ $(document).ready(function() {
 	$('#queue').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
-	$('#circlebutton').hide()
+	$('#circlebutton').hide();
 
 	$('#circlebutton').click(function(){
 		switchScreen();
@@ -202,6 +202,7 @@ var enterRoom = function(){
 	$('#passcode').hide();
 	$('#tabs').show();
 	$('#searchscreen').show();
+	$('#circlebutton').show();
 }
 
 var switchScreen = function(){

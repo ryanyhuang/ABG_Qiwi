@@ -4,8 +4,8 @@ import ReactDOM from 'react';
 import {SearchResult} from './components/searchresult.js';
 import {Notification} from './components/notification.js';
 
-var socket = io.connect('http://localhost:3000');
-//var socket = io.connect('http://abgripple.herokuapp.com');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -46,7 +46,7 @@ console.log("usercookie:%s", getCookie());
 
 
 $(document).ready(function() {
-	
+
 	/*initial screen hiding*/
 	$('#queue').hide();
 	$('#searchscreen').hide();

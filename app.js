@@ -119,8 +119,6 @@ io.sockets.on('connection', function(socket){
 
 		var roomurl = 'parties/' + songRequest.room;
 
-
-
 		firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 			var room_requests_list = snapshot.val().request_list_id;
 			console.log(room_requests_list);
@@ -161,7 +159,19 @@ io.sockets.on('connection', function(socket){
 		firebase.database().ref('notifications/').once('value').then(function(snapshot) {
 			var usernotifs = snapshot.val();
 
-			var time = "8:15 PM"
+			//get time information
+			var d = new Date();
+		    var hours = d.getHours();
+		    var mins = d.getMinutes();
+		    var timeOfDay = hours < 12 ? "AM" : "PM";
+		    if (hours == 0) {
+		        hours = 12;
+		    }
+		    else if (hours > 12) {
+		        hours = hours - 12;
+		    }
+
+		    var time = hours + ":" + mins + " " + timeOfDay;
 
 			var notif = {
 				status: 'Requested',
@@ -170,8 +180,7 @@ io.sockets.on('connection', function(socket){
 				song_artist: songRequest.song_artist,
 				song_time: time
 			}
-			/*new Date();
-			console.log(time.getHours());*/
+			
 			
 			if(!usernotifs.hasOwnProperty(data.user)){
 				console.log("new user!");

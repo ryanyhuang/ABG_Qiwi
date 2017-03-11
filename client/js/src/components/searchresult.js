@@ -1,23 +1,56 @@
 import React, {Component} from 'react';
 
-export class SongInfo extends Component {
+export class SearchResult extends Component {
 
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	      show: true
+	      requested: false
     	};
   	}
 
 	clicked (){
 		var info = this.props.info;
 		this.props.cb(info);
-		alert (info.song_name + " added");
-		this.setState({show: false});
+		this.setState({requested: true});
 	}
 
 	render () {
-		if(!this.state.show) return(<li></li>);
+		if(this.state.requested){
+
+			return(
+				<li>
+
+					<div className="tracks">
+
+						<div className="track">
+
+							<div className="track__art">
+
+								<img src={this.props.info.song_img}/>
+
+							</div>
+
+						<div className="track__title">{this.props.info.song_name}</div>
+
+						<div className="track__artist">{this.props.info.song_artist}</div>
+
+						<div className="track__divider">|</div>
+
+							<div className="track__requested">
+
+								<span className="label">Requested</span>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</li>
+			);
+
+		}
 
 		/*
 		<img src={this.props.info.art}/>
@@ -42,7 +75,7 @@ export class SongInfo extends Component {
 
 					<div className="track__title">{this.props.info.song_name}</div>
 
-					<div className="track__length">{this.props.info.song_artist}</div>
+					<div className="track__artist">{this.props.info.song_artist}</div>
 
 					<div className="track__divider">|</div>
 

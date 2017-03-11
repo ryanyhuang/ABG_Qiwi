@@ -319,7 +319,13 @@ overflow-y: scroll;
 }
 
 /* only for queue page: song length */
-.tracks .track__length {
+.tracks .track__artist {
+  margin-left: auto;
+  
+  color: #aaaaaa;
+}
+
+.tracks .track__songtime {
   margin-left: auto;
   
   color: #aaaaaa;
@@ -338,7 +344,7 @@ overflow-y: scroll;
 .tracks .track__status {
  /*margin-left: auto;*/
  margin-right: 2%;
- color: #aaaaaa;
+ color: #02B3E4;
 }
 
 /* only for search page: style for request button */
@@ -346,4 +352,10 @@ overflow-y: scroll;
  /*margin-left: auto;*/
  margin-right: 2%;
  color: #aaaaaa;
+}
+
+.tracks .track__requested {
+ /*margin-left: auto;*/
+ margin-right: 2%;
+ color: #02B3E4;
 }

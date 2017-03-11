@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-export class SampleTrack extends Component {
+export class Notification extends Component {
 
 	constructor(props) {
 	    super(props);
@@ -40,7 +40,7 @@ export class SampleTrack extends Component {
 
 					<div className="track__title">{this.props.info.song_name}</div>
 
-					<div className="track__length">{this.props.info.song_time}</div>
+					<div className="track__songtime">{this.props.info.song_time}</div>
 
 					<div className="track__divider">|</div>
 

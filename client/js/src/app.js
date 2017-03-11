@@ -1,13 +1,11 @@
 'use strict';
 import React from 'react';
 import ReactDOM from 'react';
-import {SearchBar} from './components/searchbar.js';
-import {TestComp} from './components/testcomponent.js';
-import {SongInfo} from './components/songinfo.js';
-import {SampleTrack} from './components/sampletrack.js';
+import {SearchResult} from './components/searchresult.js';
+import {Notification} from './components/notification.js';
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -29,22 +27,39 @@ var getCookie = function() {
 }
 
 var delete_cookie = function(name) {
-   document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 };
+
+var addRoomToCookie = function(room){
+	var now = new Date();
+	now.setTime(now.getTime() + 1 * 3600 * 1000);
+	document.cookie = "room=" + room + "; expires=" + now.toUTCString() + ";";
+}
 
 genCookie();
 var cook = getCookie().substring(0,10);
 
 //0162668620=; 0264571937=; 0296221873=; 3017802789=; 321094274610=; 6685739677=; 7983560417=
 //delete_cookie("321094274610");
-console.log("usercookie:%s",cook);
+console.log("usercookie:%s", getCookie());
 
 
 
 $(document).ready(function() {
+	
+	/*initial screen hiding*/
+	$('#queue').hide();
+	$('#searchscreen').hide();
+	$('#tabs').hide();
+	$('#circlebutton').hide();
 
-
-	console.log(document.cookie.length);
+	if(getCookie().indexOf("room") != -1){
+		var index = getCookie().indexOf("room");
+		var room = getCookie().substring(index+5, index+9);
+		console.log("room:%s", room);
+		roomId = room;
+		enterRoom();
+	}
 
 	$('#box1').focus();
 
@@ -78,11 +93,6 @@ $(document).ready(function() {
 		}
 	});
 
-	/*initial screen hiding*/
-	$('#queue').hide();
-	$('#searchscreen').hide();
-	$('#tabs').hide();
-	$('#circlebutton').hide();
 
 	$('#circlebutton').click(function(){
 		switchScreen();
@@ -129,7 +139,7 @@ var doSearch = function(search){
 		function(tracks){
 
 			trackElems = tracks.map(function(song, i){
-				return <SongInfo key={i} info={song} cb={addSong}/>;
+				return <SearchResult key={i} info={song} cb={addSong}/>;
 			});
 
 			ReactDOM.render(<ul>{trackElems}</ul>, document.getElementById('searchRes'));
@@ -142,7 +152,7 @@ var updateNotifs = function(cookie){
 	socket.emit('getNotifs', cookie,
 		function(notifsres){
 			notifs = notifsres.map(function(notif,i){
-				return <SampleTrack key={i} info={notif}/>;
+				return <Notification key={i} info={notif}/>;
 			});
 
 			ReactDOM.render(<ul>{notifs}</ul>, document.getElementById('queueRes'));
@@ -159,7 +169,7 @@ var addSong = function(song){
 		song_album: song.song_album,
 		song_artist: song.song_artist,
 		room: roomId,
-		user: cook //to be replaced with cookie 
+		user: cook
 	}
 
 	socket.emit('addSong', addObject);
@@ -171,8 +181,8 @@ var verifyPasscode = function(passcode){
 		function(result){
 			if(result){
 				roomId = passcode;
-				alert("Valid passcode! entering room: " + passcode);
 				enterRoom();
+				addRoomToCookie(passcode);
 			}
 			else {
 				alert("Invalid Passcode");

@@ -52,7 +52,7 @@ var database = firebase.database();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
-//sockets listening
+//sockets listening========================================
 io.sockets.on('connection', function(socket){
 	console.log('user connected');
 

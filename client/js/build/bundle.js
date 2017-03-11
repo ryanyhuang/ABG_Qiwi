@@ -208,6 +208,7 @@ var enterRoom = function enterRoom() {
 	$('#passcode').hide();
 	$('#tabs').show();
 	$('#searchscreen').show();
+	$('#circlebutton').show();
 };
 
 var switchScreen = function switchScreen() {

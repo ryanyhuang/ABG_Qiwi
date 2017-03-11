@@ -67,14 +67,14 @@ io.sockets.on('connection', function(socket){
 					//if(res==undefined) continue;
 					//if(res.body.tracks.item[i] == undefined) continue;
 					var songInfo = {
-						album: res.body.tracks.items[i].album.name,
-						song: res.body.tracks.items[i].name,
-						artist: res.body.tracks.items[i].artists[0].name,
-						id: res.body.tracks.items[i].id,
-						art: res.body.tracks.items[i].album.images[2].url
+						song_album: res.body.tracks.items[i].album.name,
+						song_name: res.body.tracks.items[i].name,
+						song_artist: res.body.tracks.items[i].artists[0].name,
+						song_id: res.body.tracks.items[i].id,
+						song_img: res.body.tracks.items[i].album.images[2].url
 
 					};
-					console.log("name: %s, id: %s", songInfo.song, songInfo.id);
+					//console.log("name: %s, id: %s", songInfo.song_name, songInfo.song_id);
 					retTracks.push(songInfo);
 
 				}
@@ -160,24 +160,35 @@ io.sockets.on('connection', function(socket){
 
 		firebase.database().ref('notifications/').once('value').then(function(snapshot) {
 			var usernotifs = snapshot.val();
+
+			var time = "8:15 PM"
+
+			var notif = {
+				status: 'Requested',
+				song_name: songRequest.song_name,
+				song_img: songRequest.song_img,
+				song_artist: songRequest.song_artist,
+				song_time: time
+			}
+			/*new Date();
+			console.log(time.getHours());*/
 			
 			if(!usernotifs.hasOwnProperty(data.user)){
 				console.log("new user!");
-
-				var notif = {
-					status: 'Requested',
-					song_name: songRequest.song_name,
-					song_img: "https://i.scdn.co/image/a78a681a35c1bbf6a3c45703ce73e6d3d415af9e",
-					song_artist: "Hi",
-					song_time: "8:15 PM"
-				}
-
 				var newarr = [];
 				newarr.push(notif);
 				firebase.database().ref('notifications/').child(data.user).set(newarr);
 
 			} else {
 				console.log("existing user");
+
+				firebase.database().ref('notifications/' + data.user).once('value').then(function(snapshot2){
+					var arr = snapshot2.val();
+					arr.push(notif);
+					firebase.database().ref('notifications/' + data.user).set(arr);
+
+				});
+
 			}
 
 		});
@@ -189,8 +200,7 @@ io.sockets.on('connection', function(socket){
    		var userurl = 'notifications/' + data;
 		firebase.database().ref(userurl).once('value').then(function(snapshot) {
 			var newarr = snapshot.val();
-			var newarr = newarr.reverse();
-			console.log(newarr);
+			if(newarr != null) newarr = newarr.reverse();
 			fn(newarr);
 
 		});

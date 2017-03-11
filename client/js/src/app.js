@@ -6,8 +6,8 @@ import {TestComp} from './components/testcomponent.js';
 import {SongInfo} from './components/songinfo.js';
 import {SampleTrack} from './components/sampletrack.js';
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -150,21 +150,14 @@ var updateNotifs = function(cookie){
 	);
 }
 
-var samptracks = (
-	<ul>
-		<SampleTrack/>
-		<SampleTrack/>
-		<SampleTrack/>
-		<SampleTrack/>
-	</ul>
-
-	);
-//ReactDOM.render(samptracks, document.getElementById('queueRes'));
 
 var addSong = function(song){
 	var addObject = {
-		song_name: song.song,
-		song_id: song.id,
+		song_name: song.song_name,
+		song_id: song.song_id,
+		song_img: song.song_img,
+		song_album: song.song_album,
+		song_artist: song.song_artist,
 		room: roomId,
 		user: cook //to be replaced with cookie 
 	}

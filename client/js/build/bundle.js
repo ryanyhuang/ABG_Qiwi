@@ -17,8 +17,8 @@ var _componentsSonginfoJs = require('./components/songinfo.js');
 
 var _componentsSampletrackJs = require('./components/sampletrack.js');
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -161,20 +161,13 @@ var updateNotifs = function updateNotifs(cookie) {
 	});
 };
 
-var samptracks = _react2['default'].createElement(
-	'ul',
-	null,
-	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
-	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
-	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null),
-	_react2['default'].createElement(_componentsSampletrackJs.SampleTrack, null)
-);
-//ReactDOM.render(samptracks, document.getElementById('queueRes'));
-
 var addSong = function addSong(song) {
 	var addObject = {
-		song_name: song.song,
-		song_id: song.id,
+		song_name: song.song_name,
+		song_id: song.song_id,
+		song_img: song.song_img,
+		song_album: song.song_album,
+		song_artist: song.song_artist,
 		room: roomId,
 		user: cook //to be replaced with cookie
 	};
@@ -440,7 +433,7 @@ var SongInfo = (function (_Component) {
 		value: function clicked() {
 			var info = this.props.info;
 			this.props.cb(info);
-			alert(info.song + " added");
+			alert(info.song_name + " added");
 			this.setState({ show: false });
 		}
 	}, {
@@ -467,17 +460,17 @@ var SongInfo = (function (_Component) {
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__art" },
-							_react2["default"].createElement("img", { src: this.props.info.art })
+							_react2["default"].createElement("img", { src: this.props.info.song_img })
 						),
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__title" },
-							this.props.info.song
+							this.props.info.song_name
 						),
 						_react2["default"].createElement(
 							"div",
 							{ className: "track__length" },
-							this.props.info.artist
+							this.props.info.song_artist
 						),
 						_react2["default"].createElement(
 							"div",

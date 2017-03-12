@@ -148,7 +148,7 @@ li {
 	color: #FFFFFF;
 	margin: auto;
 	position: absolute;
-	top: 35%; left: 0; bottom: 0; right: 0;
+	top: 33%; left: 0; bottom: 0; right: 0;
 }
 
 /* for the user input boxes */
@@ -236,7 +236,15 @@ marquee {
 }
 
 #error {
-	color: #F08080;
+	/*color: #F08080;*/
+	color: #ff6666;
+	width: 55%;
+	display: inline-block;
+	/*border: 2px solid #444444;*/
+	margin-top: 8px;
+	background: #444444;
+	padding: 4px;
+	border-radius: 10px;
 }
 
 /* search results scrolling 

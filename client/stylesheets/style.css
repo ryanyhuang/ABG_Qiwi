@@ -416,12 +416,13 @@ overflow-y: scroll;
 	flex-flow: row nowrap;
 	align-items: center;
 
+/*
 	background: #40698c;
 	border: solid 2px var(--logoBlue);
 
 	border-radius: 5px;
 	color: white;
-	font-weight: 200;
+	font-weight: 200;*/
 	padding: 3px 5px 5px 4px;
 	margin-right: 1%;
 
@@ -435,7 +436,7 @@ overflow-y: scroll;
 	align-items: center;
 	color: var(--logoBlue);
 	/*background: var(--logoBlue);*/
-	margin-right: 1%;
+	margin-right: 3%;
 
 }
 
@@ -448,7 +449,7 @@ overflow-y: scroll;
 	align-items: center;
 	color: var(--logoBlue);
 	/*background: var(--logoBlue);*/
-	margin-right: 1%;
+	margin-right: 3%;
 
 }
 
@@ -460,4 +461,9 @@ overflow-y: scroll;
     align-items: center;
     color: var(--grayText);
     margin-left: auto;
+}
+
+.purebutton{
+	border-radius: 3px;
+	padding: 2px;
 }

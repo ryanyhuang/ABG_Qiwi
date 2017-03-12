@@ -518,8 +518,8 @@ var SearchResult = (function (_Component) {
 							"span",
 							{ className: "label" },
 							_react2["default"].createElement(
-								"a",
-								{ onClick: this.clicked.bind(this), ontouchstart: this.clicked.bind(this) },
+								"button",
+								{ className: "pure-button", onClick: this.clicked.bind(this) },
 								"Request"
 							)
 						)

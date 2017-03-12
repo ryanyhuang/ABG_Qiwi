@@ -10,7 +10,8 @@ body {
 	padding: 0;
 	font-family: 'Montserrat';
 	text-align: center;
-	background-color: #2c475e;
+	background-image: url("test4.jpg");
+	background-size: cover;
 }
 
 ::-webkit-scrollbar { 
@@ -138,6 +139,9 @@ li {
 /* passcode screen: set all text color on page to white */ 
 #passcode {
 	color: #FFFFFF;
+	margin: auto;
+	position: absolute;
+	top: 35%; left: 0; bottom: 0; right: 0;
 }
 
 /* for the user input boxes */
@@ -184,23 +188,11 @@ marquee {
 } 
 
 #clear {
-	font-family: 'Montserrat';
-	font-size: 20px;
-	font-weight: 200;
-	margin-left: 10px;
-	color: #FFFFFF;
-	text-align: center;
-	padding: 5px 13px;
-	background-color: #345470;
-	border-radius: 20px;
+	padding: 10px 13px;
 	cursor: pointer;
-	-webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    border: 2px solid;
-    border-color: #40698c;
 	position: absolute;
 	display: inline;
-	margin-top: 10px;
+	color: #02B3E4;
 }
 
 /* CSS for the join room button */
@@ -234,6 +226,10 @@ marquee {
 	background-color: #40698c;
     color: #FFFFFF;
     border-color: #40698c;
+}
+
+#error { 
+	color: #F08080;
 }
 
 /* search results scrolling 

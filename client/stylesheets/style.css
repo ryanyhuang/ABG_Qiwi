@@ -5,6 +5,8 @@
 	--grayText: #b7b7b7;
 	
 }
+
+/* #40698c */ 
 html {
 	height:100%;
 	width: 100%;
@@ -345,7 +347,7 @@ overflow-y: scroll;
   flex-flow: row nowrap;
   align-items: center;
   text-align: left;
-  background: #2C4758;
+  background: var(--secondaryBackground);
   font-family:var(--secondaryFont);
   
 }
@@ -368,12 +370,7 @@ overflow-y: scroll;
 	margin-right: 7px;
 }
 
-/* track number */
-.track__number {
-  margin-left: 10px;
-  color: #828282;
-  width: 12px;
-}
+
 .track__songinfo {
   /*display: flex;*/
   flex-flow: column wrap;

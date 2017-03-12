@@ -260,8 +260,16 @@ li {
     border-color: #40698c;
 }
 
-#error { 
-	color: #F08080;
+#error {
+	/*color: #F08080;*/
+	color: #ff6666;
+	width: 55%;
+	display: inline-block;
+	/*border: 2px solid #444444;*/
+	margin-top: 8px;
+	background: #444444;
+	padding: 4px;
+	border-radius: 10px;
 }
 
 /* search results scrolling 

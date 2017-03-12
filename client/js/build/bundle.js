@@ -59,14 +59,15 @@ $(document).ready(function () {
 	$('#searchscreen').hide();
 	$('#tabs').hide();
 	$('#circlebutton').hide();
+	$('#error').hide();
 
-	if (getCookie().indexOf("room") != -1) {
-		var index = getCookie().indexOf("room");
-		var room = getCookie().substring(index + 5, index + 9);
-		console.log("room:%s", room);
-		roomId = room;
-		enterRoom();
-	}
+	// if(getCookie().indexOf("room") != -1){
+	// 	var index = getCookie().indexOf("room");
+	// 	var room = getCookie().substring(index+5, index+9);
+	// 	console.log("room:%s", room);
+	// 	roomId = room;
+	// 	enterRoom();
+	// }
 
 	$('#box1').focus();
 
@@ -79,23 +80,43 @@ $(document).ready(function () {
 	});
 
 	$('.box').keyup(function (event) {
+
+		// handle backspace/deleting a passcode input
 		if (event.keyCode == 8) {
-			return;
-		}
-		if (event.keyCode < 48 || event.keyCode > 57) {
-			event.preventDefault();
-			return;
-		} else {
-			console.log(this.id);
 			var int = parseInt(this.id.charAt(3));
-			int++;
-			if (int == 5) {
-				document.getElementById("joinButton").focus();
-			} else {
+			if (int > 1) {
+				int--;
 				var newBox = "box" + int;
 				document.getElementById(newBox).focus();
 			}
+			return;
 		}
+
+		// prevent other invalid characters from being entered
+		if (event.keyCode < 48 || event.keyCode > 57) {
+			event.preventDefault();
+			return;
+		}
+
+		// automatically move to the next input box, or the join button
+		else {
+				console.log(this.id);
+				var int = parseInt(this.id.charAt(3));
+				int++;
+				if (int == 5) {
+					document.getElementById("joinButton").focus();
+				} else {
+					var newBox = "box" + int;
+					document.getElementById(newBox).focus();
+				}
+			}
+	});
+
+	$('#joinButton').keyup(function (event) {
+		if ($('#joinButton').is(':focus') && event.keyCode == 8) {
+			document.getElementById("box4").focus();
+			return;
+		};
 	});
 
 	$('#circlebutton').click(function () {
@@ -189,9 +210,14 @@ var verifyPasscode = function verifyPasscode(passcode) {
 		if (result) {
 			roomId = passcode;
 			enterRoom();
+			console.log('hi');
+			if (window.onload) {
+				console.log('window loaded');
+				removeBackground();
+			}
 			addRoomToCookie(passcode);
 		} else {
-			alert("Invalid Passcode");
+			$('#error').show();
 			clearBoxes();
 		}
 	});
@@ -204,6 +230,26 @@ var clearBoxes = function clearBoxes() {
 	}
 	document.getElementById("box1").focus();
 };
+
+// function addLoadEvent(func) {
+// 	var oldonload = window.onload;
+// 	if (typeof window.onload != 'function') {
+//     	window.onload = func;
+//     } else {
+//     	window.onload = function() {
+//       		if (oldonload) {
+// 				oldonload();
+// 			}
+// 			func();
+// 		}
+// 	}
+// }
+
+// addLoadEvent(
+var removeBackground = function removeBackground() {
+	document.body.style.backgroundImage = none;
+};
+
 /*enters room, need to add room saving functionality*/
 var enterRoom = function enterRoom() {
 	$('#passcode').hide();

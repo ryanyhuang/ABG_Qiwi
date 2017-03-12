@@ -10,14 +10,14 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script src="https://use.fontawesome.com/6193f4b5d0.js"></script>
 </head>
 
 <body>
+
         <div id="header">
-                <p>Ripple</p>
+                <p>ripple</p>
         </div>
-
-
 
         <div id="passcode">
 
@@ -27,19 +27,22 @@
                 <div id="code">
                         <form id="passcode_input"> 
 
-                                <input id="box1" type="number" class="box"/>
+                                <input id="box1" type="tel" class="box" maxlength=1/>
 
-                                <input id="box2" type="number" class="box"/>
+                                <input id="box2" type="tel" class="box" maxlength=1/>
 
-                                <input id="box3" type="number" class="box"/>
+                                <input id="box3" type="tel" class="box" maxlength=1/>
 
-                                <input id="box4" type="number" class="box"/>  
+                                <input id="box4" type="tel" class="box" maxlength=1/>  
                                 
-                                <button id="clear" type="button">x</button>
+                                
+                                <i id="clear" class="fa fa-times-circle-o fa-3x" aria-hidden="true"></i>
                         </form>
 
                         <button id="joinButton" type="button"> Join the Party! </button>
                 </div>
+
+                <p id="error">Invalid passcode! Please try again.</p>
         </div>
 
         <div class="screen" id="searchscreen">

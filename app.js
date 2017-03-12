@@ -71,7 +71,7 @@ io.sockets.on('connection', function(socket){
 
                 var max = 15;
                 if(numsongs < max) max = numsongs;
-
+/*
                 for (var i = 0; i < max; i++) {
 
 
@@ -91,9 +91,9 @@ io.sockets.on('connection', function(socket){
 
 				}
 
-				fn(retTracks);
+				fn(retTracks);*/
 			
-				/*
+				
 				var roomurl = 'parties/' + room;
 				firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 					var room_requests_list = snapshot.val().request_list_id;
@@ -101,15 +101,18 @@ io.sockets.on('connection', function(socket){
 
 					firebase.database().ref(songlisturl).once('value').then(function(snapshot2) {
 						var currentSongs = snapshot2.val();
+
 							//if(currentSongs != null){
 							
 							//console.log(currentSongs[j].songId);
 
 							for (var i = 0; i < max; i++) {
 
-								//if(res==undefined) continue;
-								//if(res.body.tracks.item[i] == undefined) continue;
-								var alreadyReq = false;
+							//if(res==undefined) continue;
+							//if(res.body.tracks.item[i] == undefined) continue;
+							var alreadyReq = false;
+							if(currSongs != null){
+
 
 								for(var j = 0; j < currentSongs.length; j++){
 
@@ -120,31 +123,31 @@ io.sockets.on('connection', function(socket){
 
 
 
-								var songInfo = {
-										song_album: res.body.tracks.items[i].album.name,
-										song_name: res.body.tracks.items[i].name,
-										song_artist: res.body.tracks.items[i].artists[0].name,
-										song_id: res.body.tracks.items[i].id,
-										song_img: res.body.tracks.items[i].album.images[2].url,
-										requested: alreadyReq
+									var songInfo = {
+											song_album: res.body.tracks.items[i].album.name,
+											song_name: res.body.tracks.items[i].name,
+											song_artist: res.body.tracks.items[i].artists[0].name,
+											song_id: res.body.tracks.items[i].id,
+											song_img: res.body.tracks.items[i].album.images[2].url,
+											requested: alreadyReq
 
-								};
-								console.log("adding %s w %s", songInfo.song_name, alreadyReq);
-								retTracks.push(songInfo);
+									};
+									console.log("adding %s w %s", songInfo.song_name, alreadyReq);
+									retTracks.push(songInfo);
+									}
+
 								}
-							}
+							}						
 
+							fn(retTracks);
 						}
-
-						fn(retTracks);
-					}
 
 					
 
+					});
+
+
 				});
-
-
-				});*/
 
 
             }, function(err) {

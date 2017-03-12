@@ -140,7 +140,7 @@ function newUserNotif(user, notif){
 
 }
 
-newUserNotif("1234567890", notif);
+//newUserNotif("1234567890", notif);
 
 
 
@@ -159,13 +159,23 @@ function makeSongs(){
 
 	);
 }
-/*
-var updates = {
-	1234: { key:'val'}
-};
 
-firebase.database().ref('/parties/').update(updates);*/
-//writeUserData("1234", "ryan", "ryh", "wot");
+var starCountRef = firebase.database().ref('/songlists/-KecCHHnqOvdOo6gh7N-/currSong');
+starCountRef.on('value', function(snapshot) {
+	console.log("currsong:");
+	console.log(snapshot.val());
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 

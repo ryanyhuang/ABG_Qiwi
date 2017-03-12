@@ -16,7 +16,7 @@ var _componentsNotificationJs = require('./components/notification.js');
 var socket = io.connect('http://localhost:3000');
 //var socket = io.connect('http://abgripple.herokuapp.com');
 
-var roomId = 0;
+var roomId = -1;
 
 var screen = "search";
 
@@ -47,7 +47,7 @@ var addRoomToCookie = function addRoomToCookie(room) {
 
 genCookie();
 
-delete_cookie("3307668142");
+//delete_cookie("3307668142");
 
 var index = getCookie().indexOf("user");
 var user = getCookie().substring(index + 5, index + 15);
@@ -59,13 +59,22 @@ console.log("usercookie:%s", getCookie());
 
 $(document).ready(function () {
 
+	socket.on('currsongupdate', function (currsong) {
+		if (currsong.room == roomId) {
+			var songString = currsong.song_artist + " • " + currsong.song_name + " • " + currsong.song_album;
+			var marqueeString = "Playing  >>  " + songString + "... from party " + roomId;
+			$('#marq').html(marqueeString);
+			console.log(marqueeString);
+		}
+	});
+
 	/*initial screen hiding*/
 	$('#feed').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
-	$('#circlebutton').hide();
 	$('#error').hide();
 	$('#currplaying').hide();
+	$('#leaveroom').hide();
 
 	if (getCookie().indexOf("room") != -1) {
 		var index = getCookie().indexOf("room");
@@ -118,6 +127,12 @@ $(document).ready(function () {
 			}
 	});
 
+	$('#leaveroom').click(function () {
+		delete_cookie("room");
+		roomId = -1;
+		window.location.reload();
+	});
+
 	$('#joinButton').keyup(function (event) {
 		if ($('#joinButton').is(':focus') && event.keyCode == 8) {
 			document.getElementById("box4").focus();
@@ -125,21 +140,19 @@ $(document).ready(function () {
 		};
 	});
 
-	$('#circlebutton').click(function () {
-		switchScreen();
-	});
-
 	$('#searchTab').click(function () {
-		console.log("search pressed");
 		$('#searchscreen').show();
 		$('#feed').hide();
+		$('#feedTab').css('color', '#b7b7b7');
+		$('#searchTab').css('color', 'white');
 	});
 
 	$('#feedTab').click(function () {
-		console.log("q pressed");
 		updateNotifs(user);
 		$('#feed').show();
 		$('#searchscreen').hide();
+		$('#searchTab').css('color', '#b7b7b7');
+		$('#feedTab').css('color', 'white');
 	});
 
 	//to be replace with passcode features
@@ -166,15 +179,8 @@ $(document).ready(function () {
 			event.preventDefault();
 		}
 	});
-
-	$('#searchscreen').bind('isVisible', removeBackground);
 });
 
-function removeBackground() {
-	console.log('search shown');
-	$(document.body).css('background-image', 'none');
-	$(document.body).css('background-color', '#2c475e');
-}
 /*does a search and displays the result in searchRes*/
 var doSearch = function doSearch(search) {
 	var trackElems = [];
@@ -187,7 +193,7 @@ var doSearch = function doSearch(search) {
 		), document.getElementById('searchRes'));
 		return;
 	}
-	socket.emit('searchChanged', search, function (tracks) {
+	socket.emit('searchChanged', { search: search, room: roomId }, function (tracks) {
 
 		trackElems = tracks.map(function (song, i) {
 			return _react2['default'].createElement(_componentsSearchresultJs.SearchResult, { key: i, info: song, cb: addSong });
@@ -204,6 +210,7 @@ var doSearch = function doSearch(search) {
 var updateNotifs = function updateNotifs(cookie) {
 	var notifs = [];
 	socket.emit('getNotifs', cookie, function (notifsres) {
+		if (notifsres == null) return;
 		notifs = notifsres.map(function (notif, i) {
 			return _react2['default'].createElement(_componentsNotificationJs.Notification, { key: i, info: notif });
 		});
@@ -269,26 +276,15 @@ var clearBoxes = function clearBoxes() {
 var enterRoom = function enterRoom() {
 	$('#passcode').hide();
 	$('#tabs').show();
-	$('#searchscreen').show(function () {
-		$(this).trigger('isVisible');
-	});
+	$('#searchscreen').show();
 	$('#circlebutton').show();
 	$('#currplaying').show();
-};
+	$('#leaveroom').show();
 
-var switchScreen = function switchScreen() {
-	if (screen == "search") {
-		screen = "feed";
-		$('#searchscreen').hide();
-		$('#feed').show();
-		$('#buttonval').html('S');
-		updateNotifs(user);
-	} else {
-		screen = "search";
-		$('#searchscreen').show();
-		$('#feed').hide();
-		$('#buttonval').html('F');
-	}
+	$(document.body).css('background-image', 'none');
+	$(document.body).css('background-color', '#2c475e');
+
+	socket.emit('listenToCurrPlaying', roomId);
 };
 
 },{"./components/notification.js":2,"./components/searchresult.js":3,"react":159}],2:[function(require,module,exports){
@@ -347,38 +343,38 @@ var Notification = (function (_Component) {
 				null,
 				_react2["default"].createElement(
 					"div",
-					{ className: "tracks" },
+					{ className: "track" },
 					_react2["default"].createElement(
 						"div",
-						{ className: "track" },
+						{ className: "track__art" },
+						_react2["default"].createElement("img", { src: this.props.info.song_img })
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "track__songinfo" },
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__art" },
-							_react2["default"].createElement("img", { src: this.props.info.song_img })
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__title" },
+							{ className: "track__songinfo__title" },
 							this.props.info.song_name
 						),
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__songtime" },
-							this.props.info.song_time
-						),
+							{ className: "track__songinfo__artist" },
+							this.props.info.song_artist
+						)
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "track__songtime" },
+						this.props.info.song_time
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "track__status" },
 						_react2["default"].createElement(
-							"div",
-							{ className: "track__divider" },
-							"|"
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__status" },
-							_react2["default"].createElement(
-								"span",
-								{ className: "label" },
-								this.props.info.status
-							)
+							"span",
+							{ className: "label" },
+							this.props.info.status
 						)
 					)
 				)
@@ -419,9 +415,18 @@ var SearchResult = (function (_Component) {
 		_classCallCheck(this, SearchResult);
 
 		_get(Object.getPrototypeOf(SearchResult.prototype), "constructor", this).call(this, props);
-		this.state = {
-			requested: false
-		};
+
+		//console.log("adding %s w %s", this.props.info.song_name, this.props.info.requested);
+		this.props.info.requested = false;
+		if (this.props.info.requested) {
+			this.state = {
+				requested: true
+			};
+		} else {
+			this.state = {
+				requested: false
+			};
+		}
 	}
 
 	_createClass(SearchResult, [{
@@ -441,38 +446,33 @@ var SearchResult = (function (_Component) {
 					null,
 					_react2["default"].createElement(
 						"div",
-						{ className: "tracks" },
+						{ className: "track" },
 						_react2["default"].createElement(
 							"div",
-							{ className: "track" },
+							{ className: "track__art" },
+							_react2["default"].createElement("img", { src: this.props.info.song_img })
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__songinfo" },
 							_react2["default"].createElement(
 								"div",
-								{ className: "track__art" },
-								_react2["default"].createElement("img", { src: this.props.info.song_img })
-							),
-							_react2["default"].createElement(
-								"div",
-								{ className: "track__title" },
+								{ className: "track__songinfo__title" },
 								this.props.info.song_name
 							),
 							_react2["default"].createElement(
 								"div",
-								{ className: "track__artist" },
+								{ className: "track__songinfo__artist" },
 								this.props.info.song_artist
-							),
+							)
+						),
+						_react2["default"].createElement(
+							"div",
+							{ className: "track__requested" },
 							_react2["default"].createElement(
-								"div",
-								{ className: "track__divider" },
-								"|"
-							),
-							_react2["default"].createElement(
-								"div",
-								{ className: "track__requested" },
-								_react2["default"].createElement(
-									"span",
-									{ className: "label" },
-									"Requested"
-								)
+								"span",
+								{ className: "label" },
+								"Requested"
 							)
 						)
 					)
@@ -491,41 +491,36 @@ var SearchResult = (function (_Component) {
 				null,
 				_react2["default"].createElement(
 					"div",
-					{ className: "tracks" },
+					{ className: "track" },
 					_react2["default"].createElement(
 						"div",
-						{ className: "track" },
+						{ className: "track__art" },
+						_react2["default"].createElement("img", { src: this.props.info.song_img })
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "track__songinfo" },
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__art" },
-							_react2["default"].createElement("img", { src: this.props.info.song_img })
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__title" },
+							{ className: "track__songinfo__title" },
 							this.props.info.song_name
 						),
 						_react2["default"].createElement(
 							"div",
-							{ className: "track__artist" },
+							{ className: "track__songinfo__artist" },
 							this.props.info.song_artist
-						),
+						)
+					),
+					_react2["default"].createElement(
+						"div",
+						{ className: "track__reqbutton" },
 						_react2["default"].createElement(
-							"div",
-							{ className: "track__divider" },
-							"|"
-						),
-						_react2["default"].createElement(
-							"div",
-							{ className: "track__reqbutton" },
+							"span",
+							{ className: "label" },
 							_react2["default"].createElement(
-								"span",
-								{ className: "label" },
-								_react2["default"].createElement(
-									"button",
-									{ onClick: this.clicked.bind(this) },
-									"Request"
-								)
+								"div",
+								{ onClick: this.clicked.bind(this) },
+								"Request"
 							)
 						)
 					)

@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script src="https://use.fontawesome.com/6193f4b5d0.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Reem+Kufi" rel="stylesheet">
 </head>
 
 <body>
@@ -36,7 +37,7 @@
                                 <input id="box4" type="tel" class="box" maxlength=1/>  
                                 
                                 
-                                <i id="clear" class="fa fa-times-circle-o fa-3x" aria-hidden="true"></i>
+                                <!--i id="clear" class="fa fa-times-circle-o fa-3x" aria-hidden="true"></i-->
                         </form>
 
                         <button id="joinButton" type="button"> Join the Party! </button>
@@ -47,7 +48,8 @@
 
         <div class="screen" id="searchscreen">
                 
-                <div class="searchbar" onshow="removeBackground()">
+                <!--div class="searchbar" onshow="removeBackground()"-->
+                <div class="searchbar">
                         <form id="entry">
                                 <input id="search" type="search" placeholder="Search"/>
                         </form>
@@ -69,18 +71,23 @@
 
         <div id="currplaying">
 
-                <marquee>Playing From Party 1234: Drake - Fake Love</marquee>
+                <marquee id="marq"> Playing From Party 1234: Drake - Fake Love - Fake Love </marquee>
                 
         </div>
 
         <ul id="tabs">
                 <li id="searchTab">
-                        <div class="tab" >Search</div>
+
+                        <div class="tab" > <i class="fa fa-search" aria-hidden="true"></i> &nbsp; &nbsp;Search</div>
                 </li>
                 <li id="feedTab">
-                        <div class="tab" >Feed</div>
+                        <div class="tab" > <i class="fa fa-list" aria-hidden="true"></i> &nbsp; &nbsp;Feed</div>
                 </li>
         </ul>
+
+        <div id="leaveroom">
+                <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+        </div>
 
 
 

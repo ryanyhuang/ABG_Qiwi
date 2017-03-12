@@ -7,7 +7,7 @@ import {Notification} from './components/notification.js';
 var socket = io.connect('http://localhost:3000');
 //var socket = io.connect('http://abgripple.herokuapp.com');
 
-var roomId = 0;
+var roomId = -1;
 
 var screen = "search";
 
@@ -38,7 +38,7 @@ var addRoomToCookie = function(room){
 
 genCookie();
 
-delete_cookie("3307668142");
+//delete_cookie("3307668142");
 
 
 var index = getCookie().indexOf("user");
@@ -53,21 +53,31 @@ console.log("usercookie:%s", getCookie());
 
 $(document).ready(function() {
 
+	socket.on('currsongupdate', function(currsong){
+		if(currsong.room == roomId){
+			var songString = currsong.song_artist + " • " + currsong.song_name + " • " + currsong.song_album;
+			var marqueeString = "Playing  >>  " + songString + "... from party " + roomId;
+			$('#marq').html(marqueeString);
+			console.log(marqueeString);
+		}
+		
+	});
+
 	/*initial screen hiding*/
 	$('#feed').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
-	$('#circlebutton').hide();
 	$('#error').hide();
 	$('#currplaying').hide();
+	$('#leaveroom').hide();
 
-	// if(getCookie().indexOf("room") != -1){
-	// 	var index = getCookie().indexOf("room");
-	// 	var room = getCookie().substring(index+5, index+9);
-	// 	console.log("room:%s", room);
-	// 	roomId = room;
-	// 	enterRoom();
-	// }
+	if(getCookie().indexOf("room") != -1){
+		var index = getCookie().indexOf("room");
+		var room = getCookie().substring(index+5, index+9);
+		console.log("room:%s", room);
+		roomId = room;
+		enterRoom();
+	}
 
 	$('#box1').focus();
 
@@ -112,6 +122,13 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#leaveroom').click(function(){
+		delete_cookie("room");
+		roomId = -1;
+		window.location.reload();
+
+	});
+
 	$('#joinButton').keyup(function(event){
 		if ($('#joinButton').is(':focus') && event.keyCode == 8) {
 			document.getElementById("box4").focus();
@@ -119,21 +136,19 @@ $(document).ready(function() {
 		};
 	});
 
-	$('#circlebutton').click(function(){
-		switchScreen();
-	});
-
 	$('#searchTab').click(function(){
-		console.log("search pressed");
 		$('#searchscreen').show();
         $('#feed').hide();
+        $('#feedTab').css('color', '#b7b7b7');
+        $('#searchTab').css('color', 'white');
 	});
 
 	$('#feedTab').click(function(){
-		console.log("q pressed");
 		updateNotifs(user);
 		$('#feed').show();
         $('#searchscreen').hide();
+        $('#searchTab').css('color', '#b7b7b7');
+        $('#feedTab').css('color', 'white');
 	});
 
 	//to be replace with passcode features
@@ -164,14 +179,9 @@ $(document).ready(function() {
 		
 	});
 
-	$('#searchscreen').bind('isVisible', removeBackground);
 });
 
-function removeBackground() {
-	console.log('search shown');
-	$(document.body).css('background-image', 'none');
-	$(document.body).css('background-color', '#2c475e');
-}
+
 /*does a search and displays the result in searchRes*/
 var doSearch = function(search){
 	var trackElems = [];
@@ -180,7 +190,7 @@ var doSearch = function(search){
 		ReactDOM.render(<ul>{trackElems}</ul>, document.getElementById('searchRes'));
 		return;
 	}
-	socket.emit('searchChanged', search,
+	socket.emit('searchChanged', {search: search, room: roomId},
 		function(tracks){
 
 			trackElems = tracks.map(function(song, i){
@@ -196,6 +206,7 @@ var updateNotifs = function(cookie){
 	var notifs = [];
 	socket.emit('getNotifs', cookie,
 		function(notifsres){
+			if(notifsres == null) return;
 			notifs = notifsres.map(function(notif,i){
 				return <Notification key={i} info={notif}/>;
 			});
@@ -265,27 +276,16 @@ var clearBoxes = function() {
 var enterRoom = function(){
 	$('#passcode').hide();
 	$('#tabs').show();
-	$('#searchscreen').show(function() {
-		$(this).trigger('isVisible');
-	});
+	$('#searchscreen').show();
 	$('#circlebutton').show();
 	$('#currplaying').show();
-}
+	$('#leaveroom').show();
 
-var switchScreen = function(){
-	if(screen == "search"){
-		screen = "feed";
-		$('#searchscreen').hide();
-        $('#feed').show();
-        $('#buttonval').html('S');
-        updateNotifs(user);
-	} else {
-		screen = "search";
-		$('#searchscreen').show();
-        $('#feed').hide();
-        $('#buttonval').html('F');
+	$(document.body).css('background-image', 'none');
+	$(document.body).css('background-color', '#2c475e');
 
-	}
+	socket.emit('listenToCurrPlaying', roomId);
+
 }
 
 

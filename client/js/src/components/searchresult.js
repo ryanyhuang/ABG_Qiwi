@@ -4,9 +4,19 @@ export class SearchResult extends Component {
 
 	constructor(props) {
 	    super(props);
-	    this.state = {
-	      requested: false
-    	};
+
+	    //console.log("adding %s w %s", this.props.info.song_name, this.props.info.requested);
+	    this.props.info.requested = false;
+	    if(this.props.info.requested){
+	    	this.state = {
+		    	requested: true
+	    	};
+	    } else {
+	    	this.state = {
+		    	requested: false
+	    	};
+	    }
+	    
   	}
 
 	clicked (){
@@ -21,31 +31,29 @@ export class SearchResult extends Component {
 			return(
 				<li>
 
-					<div className="tracks">
 
-						<div className="track">
+					<div className="track">
 
-							<div className="track__art">
+						<div className="track__art">
 
-								<img src={this.props.info.song_img}/>
+							<img src={this.props.info.song_img}/>
 
-							</div>
+						</div>
 
-						<div className="track__title">{this.props.info.song_name}</div>
+						<div className="track__songinfo">
+							<div className="track__songinfo__title">{this.props.info.song_name}</div>
 
-						<div className="track__artist">{this.props.info.song_artist}</div>
+							<div className="track__songinfo__artist">{this.props.info.song_artist}</div>
+						</div>
 
-						<div className="track__divider">|</div>
+						<div className="track__requested">
 
-							<div className="track__requested">
-
-								<span className="label">Requested</span>
-
-							</div>
+							<span className="label">Requested</span>
 
 						</div>
 
 					</div>
+
 
 				</li>
 			);
@@ -63,31 +71,28 @@ export class SearchResult extends Component {
 		return (
 			<li>
 
-				<div className="tracks">
+				<div className="track">
 
-					<div className="track">
+					<div className="track__art">
 
-						<div className="track__art">
+						<img src={this.props.info.song_img}/>
 
-							<img src={this.props.info.song_img}/>
+					</div>
 
-						</div>
+					<div className="track__songinfo">
+						<div className="track__songinfo__title">{this.props.info.song_name}</div>
 
-					<div className="track__title">{this.props.info.song_name}</div>
+						<div className="track__songinfo__artist">{this.props.info.song_artist}</div>
+					</div>
 
-					<div className="track__artist">{this.props.info.song_artist}</div>
+					<div className="track__reqbutton">
 
-					<div className="track__divider">|</div>
-
-						<div className="track__reqbutton">
-
-							<span className="label"><button onClick={this.clicked.bind(this)}>Request</button></span>
-
-						</div>
+						<span className="label"><div onClick={this.clicked.bind(this)}>Request</div></span>
 
 					</div>
 
 				</div>
+
 
 			</li>
 		);

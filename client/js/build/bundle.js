@@ -13,8 +13,8 @@ var _componentsSearchresultJs = require('./components/searchresult.js');
 
 var _componentsNotificationJs = require('./components/notification.js');
 
-var socket = io.connect('http://localhost:3000');
-//var socket = io.connect('http://abgripple.herokuapp.com');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = -1;
 

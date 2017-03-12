@@ -71,7 +71,7 @@ io.sockets.on('connection', function(socket){
 
                 var max = 15;
                 if(numsongs < max) max = numsongs;
-/*
+
                 for (var i = 0; i < max; i++) {
 
 
@@ -91,9 +91,9 @@ io.sockets.on('connection', function(socket){
 
 				}
 
-				fn(retTracks);*/
+				fn(retTracks);
 			
-				
+				/*
 				var roomurl = 'parties/' + room;
 				firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 					var room_requests_list = snapshot.val().request_list_id;
@@ -147,7 +147,7 @@ io.sockets.on('connection', function(socket){
 					});
 
 
-				});
+				});*/
 
 
             }, function(err) {

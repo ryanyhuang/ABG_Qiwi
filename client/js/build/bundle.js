@@ -513,13 +513,13 @@ var SearchResult = (function (_Component) {
 					),
 					_react2["default"].createElement(
 						"div",
-						{ className: "track__reqbutton" },
+						{ className: "track__reqbutton", onClick: this.clicked.bind(this) },
 						_react2["default"].createElement(
 							"span",
 							{ className: "label" },
 							_react2["default"].createElement(
 								"div",
-								{ onClick: this.clicked.bind(this) },
+								null,
 								"Request"
 							)
 						)

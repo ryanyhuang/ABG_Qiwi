@@ -27,28 +27,27 @@ export class Notification extends Component {
 		return (
 			<li>
 
-				<div className="tracks">
+				<div className="track">
 
-					<div className="track">
+					<div className="track__art">
 
-						<div className="track__art">
+						<img src={this.props.info.song_img} />
 
-							<img src={this.props.info.song_img} />
+					</div>
 
-						</div>
+					<div className="track__songinfo">
+						
+						<div className="track__songinfo__title">{this.props.info.song_name}</div>
 
-
-					<div className="track__title">{this.props.info.song_name}</div>
+						<div className="track__songinfo__artist">{this.props.info.song_artist}</div>
+					</div>
 
 					<div className="track__songtime">{this.props.info.song_time}</div>
 
-					<div className="track__divider">|</div>
 
 						<div className="track__status">
 
-							<span className="label">{this.props.info.status}</span>
-
-						</div>
+						<span className="label">{this.props.info.status}</span>
 
 					</div>
 

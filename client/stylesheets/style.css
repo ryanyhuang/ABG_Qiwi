@@ -3,7 +3,7 @@
 	--secondaryBackground: #2c475e;
 	--secondaryFont: 'Reem Kufi';
 	--grayText: #b7b7b7;
-	#
+	
 }
 html {
 	height:100%;
@@ -437,7 +437,7 @@ overflow-y: scroll;
 	align-items: center;
 	color: var(--logoBlue);
 	/*background: var(--logoBlue);*/
-	margin-right: 3%;
+	margin-right: 3.5%;
 
 }
 
@@ -450,7 +450,7 @@ overflow-y: scroll;
 	align-items: center;
 	color: var(--logoBlue);
 	/*background: var(--logoBlue);*/
-	margin-right: 3%;
+	margin-right: 3.5%;
 
 }
 

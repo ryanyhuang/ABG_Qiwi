@@ -67,11 +67,33 @@ io.sockets.on('connection', function(socket){
         spotifyApi.searchTracks("track:" + search, { 'limit': 15 })
             .then(function(res) {    
             	var numsongs = res.body.tracks.items.length;
-            	console.log("num of tracks: %s", numsongs);           
-                
+            	console.log(res.body.tracks); 
+
                 var max = 15;
                 if(numsongs < max) max = numsongs;
 
+                for (var i = 0; i < max; i++) {
+
+
+					var songInfo = {
+							song_album: res.body.tracks.items[i].album.name,
+							song_name: res.body.tracks.items[i].name,
+							song_artist: res.body.tracks.items[i].artists[0].name,
+							song_id: res.body.tracks.items[i].id,
+							song_img: res.body.tracks.items[i].album.images[2].url,
+							requested: false
+
+					};
+
+					//console.log("adding %s w %s", songInfo.song_name, alreadyReq);
+					retTracks.push(songInfo);
+					
+
+				}
+
+				fn(retTracks);
+			
+				/*
 				var roomurl = 'parties/' + room;
 				firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 					var room_requests_list = snapshot.val().request_list_id;
@@ -79,11 +101,12 @@ io.sockets.on('connection', function(socket){
 
 					firebase.database().ref(songlisturl).once('value').then(function(snapshot2) {
 						var currentSongs = snapshot2.val();
-						if(currentSongs != null){
+							//if(currentSongs != null){
 							
-								//console.log(currentSongs[j].songId);
+							//console.log(currentSongs[j].songId);
 
 							for (var i = 0; i < max; i++) {
+
 								//if(res==undefined) continue;
 								//if(res.body.tracks.item[i] == undefined) continue;
 								var alreadyReq = false;
@@ -94,34 +117,34 @@ io.sockets.on('connection', function(socket){
 										alreadyReq = true;
 									}
 									if(j == currentSongs.length - 1){
-										var songInfo = {
-												song_album: res.body.tracks.items[i].album.name,
-												song_name: res.body.tracks.items[i].name,
-												song_artist: res.body.tracks.items[i].artists[0].name,
-												song_id: res.body.tracks.items[i].id,
-												song_img: res.body.tracks.items[i].album.images[2].url,
-												requested: alreadyReq
 
-										};
-										console.log("adding %s w %s", songInfo.song_name, alreadyReq);
-										retTracks.push(songInfo);
 
-									}
+
+								var songInfo = {
+										song_album: res.body.tracks.items[i].album.name,
+										song_name: res.body.tracks.items[i].name,
+										song_artist: res.body.tracks.items[i].artists[0].name,
+										song_id: res.body.tracks.items[i].id,
+										song_img: res.body.tracks.items[i].album.images[2].url,
+										requested: alreadyReq
+
+								};
+								console.log("adding %s w %s", songInfo.song_name, alreadyReq);
+								retTracks.push(songInfo);
 								}
-
-								
-
 							}
 
-							fn(retTracks);
 						}
 
-						
+						fn(retTracks);
+					}
 
-					});
-
+					
 
 				});
+
+
+				});*/
 
 
             }, function(err) {

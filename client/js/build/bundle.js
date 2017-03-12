@@ -166,8 +166,15 @@ $(document).ready(function () {
 			event.preventDefault();
 		}
 	});
+
+	$('#searchscreen').bind('isVisible', removeBackground);
 });
 
+function removeBackground() {
+	console.log('search shown');
+	$(document.body).css('background-image', 'none');
+	$(document.body).css('background-color', '#2c475e');
+}
 /*does a search and displays the result in searchRes*/
 var doSearch = function doSearch(search) {
 	var trackElems = [];
@@ -262,7 +269,9 @@ var clearBoxes = function clearBoxes() {
 var enterRoom = function enterRoom() {
 	$('#passcode').hide();
 	$('#tabs').show();
-	$('#searchscreen').show();
+	$('#searchscreen').show(function () {
+		$(this).trigger('isVisible');
+	});
 	$('#circlebutton').show();
 	$('#currplaying').show();
 };

@@ -87,7 +87,7 @@ export class SearchResult extends Component {
 
 					<div className="track__reqbutton" >
 
-						<span className="label"><button onClick={this.clicked.bind(this)}>Request</button></span>
+						<span className="label"><div onClick={this.clicked.bind(this)} ontouchstart={this.clicked.bind(this)}>Request</div></span>
 
 					</div>
 

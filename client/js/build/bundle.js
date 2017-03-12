@@ -13,8 +13,8 @@ var _componentsSearchresultJs = require('./components/searchresult.js');
 
 var _componentsNotificationJs = require('./components/notification.js');
 
-var socket = io.connect('http://localhost:3000');
-//var socket = io.connect('http://abgripple.herokuapp.com');
+//var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -181,8 +181,6 @@ var addSong = function addSong(song) {
 	}
 
 	var time = hours + ":" + mins + " " + timeOfDay;
-
-	console.log("time: %s", time);
 
 	var addObject = {
 		song_name: song.song_name,

@@ -259,15 +259,13 @@ li {
 }
 
 #error {
-	/*color: #F08080;*/
 	color: #ff6666;
-	width: 55%;
 	display: inline-block;
-	/*border: 2px solid #444444;*/
-	margin-top: 8px;
+	margin-top: 5px;
 	background: #444444;
 	padding: 4px;
 	border-radius: 10px;
+	border: 2px solid #444444;
 }
 
 /* search results scrolling 

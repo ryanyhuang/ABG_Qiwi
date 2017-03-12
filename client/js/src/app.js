@@ -58,6 +58,7 @@ $(document).ready(function() {
 	$('#searchscreen').hide();
 	$('#tabs').hide();
 	$('#circlebutton').hide();
+	$('#error').hide();
 	$('#currplaying').hide();
 
 	if(getCookie().indexOf("room") != -1){
@@ -72,20 +73,32 @@ $(document).ready(function() {
 
 	$('.box').keydown(function(event){
 		console.log(event.keyCode);
-		if(event.keyCode != 8 && (event.keyCode < 48 || event.keyCode > 57)){
+		if (event.keyCode != 8 && (event.keyCode < 48 || event.keyCode > 57)){
 			event.preventDefault();
 			return;
 		}
 	});
 
 	$('.box').keyup(function(event){
+		
+		// handle backspace/deleting a passcode input
 		if (event.keyCode == 8) {
+			var int = parseInt(this.id.charAt(3)); 
+			if (int > 1) {
+				int--;
+				var newBox = "box" + int;
+				document.getElementById(newBox).focus();
+			}
 			return;
 		}
+
+		// prevent other invalid characters from being entered
 		if (event.keyCode < 48 || event.keyCode > 57){
 			event.preventDefault();
 			return;
 		}
+
+		// automatically move to the next input box, or the join button
 		else {
 			console.log(this.id);
 			var int = parseInt(this.id.charAt(3));
@@ -95,11 +108,16 @@ $(document).ready(function() {
 			} else {
 				var newBox = "box" + int;
 				document.getElementById(newBox).focus();
-			}
-			
+			}	
 		}
 	});
 
+	$('#joinButton').keyup(function(event){
+		if ($('#joinButton').is(':focus') && event.keyCode == 8) {
+			document.getElementById("box4").focus();
+			return;
+		};
+	});
 
 	$('#circlebutton').click(function(){
 		switchScreen();
@@ -219,7 +237,7 @@ var verifyPasscode = function(passcode){
 				addRoomToCookie(passcode);
 			}
 			else {
-				alert("Invalid Passcode");
+				$('#error').show();
 				clearBoxes();
 			}
 

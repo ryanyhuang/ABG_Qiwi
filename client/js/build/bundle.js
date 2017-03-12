@@ -67,13 +67,13 @@ $(document).ready(function () {
 	$('#error').hide();
 	$('#currplaying').hide();
 
-	// if(getCookie().indexOf("room") != -1){
-	// 	var index = getCookie().indexOf("room");
-	// 	var room = getCookie().substring(index+5, index+9);
-	// 	console.log("room:%s", room);
-	// 	roomId = room;
-	// 	enterRoom();
-	// }
+	if (getCookie().indexOf("room") != -1) {
+		var index = getCookie().indexOf("room");
+		var room = getCookie().substring(index + 5, index + 9);
+		console.log("room:%s", room);
+		roomId = room;
+		enterRoom();
+	}
 
 	$('#box1').focus();
 
@@ -242,11 +242,6 @@ var verifyPasscode = function verifyPasscode(passcode) {
 		if (result) {
 			roomId = passcode;
 			enterRoom();
-			console.log('hi');
-			if (window.onload) {
-				console.log('window loaded');
-				removeBackground();
-			}
 			addRoomToCookie(passcode);
 		} else {
 			$('#error').show();

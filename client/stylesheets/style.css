@@ -349,7 +349,7 @@ overflow-y: scroll;
   flex-flow: row nowrap;
   align-items: center;
   text-align: left;
-  background: #2C4758;
+  background: var(--secondaryBackground);
   font-family:var(--secondaryFont);
   
 }

@@ -85,9 +85,9 @@ export class SearchResult extends Component {
 						<div className="track__songinfo__artist">{this.props.info.song_artist}</div>
 					</div>
 
-					<div className="track__reqbutton" onClick={this.clicked.bind(this)}>
+					<div className="track__reqbutton" >
 
-						<span className="label"><div>Request</div></span>
+						<span className="label"><button onClick={this.clicked.bind(this)}>Request</button></span>
 
 					</div>
 

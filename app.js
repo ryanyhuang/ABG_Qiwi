@@ -61,9 +61,14 @@ io.sockets.on('connection', function(socket){
 		var retTracks = [];
 
         spotifyApi.searchTracks("album:" + data, { 'limit': 15 })
-            .then(function(res) {                  
+            .then(function(res) {    
+            	var numsongs = res.body.tracks.items.length;
+            	console.log("num of tracks: %s", numsongs);           
                 
-				for (var i = 0; i < 15; i++) {
+                var max = 15;
+                if(numsongs < max) max = numsongs;
+                
+				for (var i = 0; i < max; i++) {
 					//if(res==undefined) continue;
 					//if(res.body.tracks.item[i] == undefined) continue;
 					var songInfo = {

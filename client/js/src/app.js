@@ -4,8 +4,8 @@ import ReactDOM from 'react';
 import {SearchResult} from './components/searchresult.js';
 import {Notification} from './components/notification.js';
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -17,8 +17,8 @@ var genCookie = function() {
 		var num = Math.floor ((Math.random()*10));
 		cookieID += num.toString();
 	}
-	if (document.cookie.length == 0) {
-		document.cookie = cookieID;
+	if (document.cookie.indexOf("user") == -1) {
+		document.cookie = "user=" + cookieID + ";";
 	}
 }
 
@@ -37,7 +37,13 @@ var addRoomToCookie = function(room){
 }
 
 genCookie();
-var cook = getCookie().substring(0,10);
+
+delete_cookie("3307668142");
+
+
+var index = getCookie().indexOf("user");
+var user = getCookie().substring(index+5, index+15);
+console.log("user: %s", user);
 
 //0162668620=; 0264571937=; 0296221873=; 3017802789=; 321094274610=; 6685739677=; 7983560417=
 //delete_cookie("321094274610");
@@ -48,10 +54,11 @@ console.log("usercookie:%s", getCookie());
 $(document).ready(function() {
 
 	/*initial screen hiding*/
-	$('#queue').hide();
+	$('#feed').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
 	$('#circlebutton').hide();
+	$('#currplaying').hide();
 
 	if(getCookie().indexOf("room") != -1){
 		var index = getCookie().indexOf("room");
@@ -96,6 +103,19 @@ $(document).ready(function() {
 
 	$('#circlebutton').click(function(){
 		switchScreen();
+	});
+
+	$('#searchTab').click(function(){
+		console.log("search pressed");
+		$('#searchscreen').show();
+        $('#feed').hide();
+	});
+
+	$('#feedTab').click(function(){
+		console.log("q pressed");
+		updateNotifs(user);
+		$('#feed').show();
+        $('#searchscreen').hide();
 	});
 
 	//to be replace with passcode features
@@ -155,7 +175,7 @@ var updateNotifs = function(cookie){
 				return <Notification key={i} info={notif}/>;
 			});
 
-			ReactDOM.render(<ul>{notifs}</ul>, document.getElementById('queueRes'));
+			ReactDOM.render(<ul>{notifs}</ul>, document.getElementById('feedRes'));
 		}
 	);
 }
@@ -172,7 +192,7 @@ var addSong = function(song){
     else if (hours > 12) {
         hours = hours - 12;
     }
-
+    if(mins < 10) mins = "0"+mins;
     var time = hours + ":" + mins + " " + timeOfDay;
 
 	var addObject = {
@@ -182,7 +202,7 @@ var addSong = function(song){
 		song_album: song.song_album,
 		song_artist: song.song_artist,
 		room: roomId,
-		user: cook,
+		user: user,
 		time: time
 	}
 
@@ -214,25 +234,27 @@ var clearBoxes = function() {
 	}
 	document.getElementById("box1").focus();
 }
+
 /*enters room, need to add room saving functionality*/
 var enterRoom = function(){
 	$('#passcode').hide();
 	$('#tabs').show();
 	$('#searchscreen').show();
 	$('#circlebutton').show();
+	$('#currplaying').show();
 }
 
 var switchScreen = function(){
 	if(screen == "search"){
 		screen = "feed";
 		$('#searchscreen').hide();
-        $('#queue').show();
+        $('#feed').show();
         $('#buttonval').html('S');
-        updateNotifs(cook);
+        updateNotifs(user);
 	} else {
 		screen = "search";
 		$('#searchscreen').show();
-        $('#queue').hide();
+        $('#feed').hide();
         $('#buttonval').html('F');
 
 	}

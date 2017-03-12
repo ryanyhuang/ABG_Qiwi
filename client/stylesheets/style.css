@@ -48,7 +48,7 @@ button:focus {outline:0 !important;}
 	font-family: 'Montserrat';
 	color: black;
 	border-top: 2px solid black;
-	height: 95%;
+	height: 70%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
@@ -77,7 +77,7 @@ button:focus {outline:0 !important;}
     table-layout: fixed;
     text-align: center;
     width: 100%;
-    height: 10%;
+    height: 8%;
     position: absolute;
     left: 0;
     bottom: 0;
@@ -97,9 +97,17 @@ button:focus {outline:0 !important;}
 
 /* style for the tab buttons */
 #tabs button{
-	width:100%;
+	width: 100%;
 	height: 100%;
 	margin: 0;
+
+}
+
+.tab{
+	height: 100%;
+	width: 100%;
+	border: solid 2px black;
+	background-color: gray;
 
 }
 /*
@@ -143,6 +151,15 @@ li {
 	text-align: center;
 }
 
+#currplaying {
+	width: 100%;
+	height: 8%;
+	border: solid 2px black;
+	background-color: gray;
+	position: absolute;
+	bottom: 7.8%;
+}
+
 /* Hide HTML5 Up and Down arrows. */
 #id input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -165,9 +182,9 @@ li {
 	border-radius: 20px;
 	cursor: pointer;
 	-webkit-transition-duration: 0.3s;
-	    transition-duration: 0.3s;
-	    border: 2px solid;
-	    border-color: #40698c;
+    transition-duration: 0.3s;
+    border: 2px solid;
+    border-color: #40698c;
 	position: absolute;
 	display: inline;
 	margin-top: 10px;

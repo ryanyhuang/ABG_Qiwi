@@ -13,8 +13,8 @@ var _componentsSearchresultJs = require('./components/searchresult.js');
 
 var _componentsNotificationJs = require('./components/notification.js');
 
-//var socket = io.connect('http://localhost:3000');
-var socket = io.connect('http://abgripple.herokuapp.com');
+var socket = io.connect('http://localhost:3000');
+//var socket = io.connect('http://abgripple.herokuapp.com');
 
 var roomId = 0;
 
@@ -26,8 +26,8 @@ var genCookie = function genCookie() {
 		var num = Math.floor(Math.random() * 10);
 		cookieID += num.toString();
 	}
-	if (document.cookie.length == 0) {
-		document.cookie = cookieID;
+	if (document.cookie.indexOf("user") == -1) {
+		document.cookie = "user=" + cookieID + ";";
 	}
 };
 
@@ -46,7 +46,12 @@ var addRoomToCookie = function addRoomToCookie(room) {
 };
 
 genCookie();
-var cook = getCookie().substring(0, 10);
+
+delete_cookie("3307668142");
+
+var index = getCookie().indexOf("user");
+var user = getCookie().substring(index + 5, index + 15);
+console.log("user: %s", user);
 
 //0162668620=; 0264571937=; 0296221873=; 3017802789=; 321094274610=; 6685739677=; 7983560417=
 //delete_cookie("321094274610");
@@ -55,10 +60,11 @@ console.log("usercookie:%s", getCookie());
 $(document).ready(function () {
 
 	/*initial screen hiding*/
-	$('#queue').hide();
+	$('#feed').hide();
 	$('#searchscreen').hide();
 	$('#tabs').hide();
 	$('#circlebutton').hide();
+	$('#currplaying').hide();
 
 	if (getCookie().indexOf("room") != -1) {
 		var index = getCookie().indexOf("room");
@@ -100,6 +106,19 @@ $(document).ready(function () {
 
 	$('#circlebutton').click(function () {
 		switchScreen();
+	});
+
+	$('#searchTab').click(function () {
+		console.log("search pressed");
+		$('#searchscreen').show();
+		$('#feed').hide();
+	});
+
+	$('#feedTab').click(function () {
+		console.log("q pressed");
+		updateNotifs(user);
+		$('#feed').show();
+		$('#searchscreen').hide();
 	});
 
 	//to be replace with passcode features
@@ -165,7 +184,7 @@ var updateNotifs = function updateNotifs(cookie) {
 			'ul',
 			null,
 			notifs
-		), document.getElementById('queueRes'));
+		), document.getElementById('feedRes'));
 	});
 };
 
@@ -179,7 +198,7 @@ var addSong = function addSong(song) {
 	} else if (hours > 12) {
 		hours = hours - 12;
 	}
-
+	if (mins < 10) mins = "0" + mins;
 	var time = hours + ":" + mins + " " + timeOfDay;
 
 	var addObject = {
@@ -189,7 +208,7 @@ var addSong = function addSong(song) {
 		song_album: song.song_album,
 		song_artist: song.song_artist,
 		room: roomId,
-		user: cook,
+		user: user,
 		time: time
 	};
 
@@ -217,25 +236,27 @@ var clearBoxes = function clearBoxes() {
 	}
 	document.getElementById("box1").focus();
 };
+
 /*enters room, need to add room saving functionality*/
 var enterRoom = function enterRoom() {
 	$('#passcode').hide();
 	$('#tabs').show();
 	$('#searchscreen').show();
 	$('#circlebutton').show();
+	$('#currplaying').show();
 };
 
 var switchScreen = function switchScreen() {
 	if (screen == "search") {
 		screen = "feed";
 		$('#searchscreen').hide();
-		$('#queue').show();
+		$('#feed').show();
 		$('#buttonval').html('S');
-		updateNotifs(cook);
+		updateNotifs(user);
 	} else {
 		screen = "search";
 		$('#searchscreen').show();
-		$('#queue').hide();
+		$('#feed').hide();
 		$('#buttonval').html('F');
 	}
 };

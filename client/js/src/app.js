@@ -61,13 +61,13 @@ $(document).ready(function() {
 	$('#error').hide();
 	$('#currplaying').hide();
 
-	if(getCookie().indexOf("room") != -1){
-		var index = getCookie().indexOf("room");
-		var room = getCookie().substring(index+5, index+9);
-		console.log("room:%s", room);
-		roomId = room;
-		enterRoom();
-	}
+	// if(getCookie().indexOf("room") != -1){
+	// 	var index = getCookie().indexOf("room");
+	// 	var room = getCookie().substring(index+5, index+9);
+	// 	console.log("room:%s", room);
+	// 	roomId = room;
+	// 	enterRoom();
+	// }
 
 	$('#box1').focus();
 
@@ -163,8 +163,15 @@ $(document).ready(function() {
 		}
 		
 	});
+
+	$('#searchscreen').bind('isVisible', removeBackground);
 });
 
+function removeBackground() {
+	console.log('search shown');
+	$(document.body).css('background-image', 'none');
+	$(document.body).css('background-color', '#2c475e');
+}
 /*does a search and displays the result in searchRes*/
 var doSearch = function(search){
 	var trackElems = [];
@@ -253,11 +260,14 @@ var clearBoxes = function() {
 	document.getElementById("box1").focus();
 }
 
+
 /*enters room, need to add room saving functionality*/
 var enterRoom = function(){
 	$('#passcode').hide();
 	$('#tabs').show();
-	$('#searchscreen').show();
+	$('#searchscreen').show(function() {
+		$(this).trigger('isVisible');
+	});
 	$('#circlebutton').show();
 	$('#currplaying').show();
 }

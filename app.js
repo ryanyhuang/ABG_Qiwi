@@ -61,9 +61,14 @@ io.sockets.on('connection', function(socket){
 		var retTracks = [];
 
         spotifyApi.searchTracks("album:" + data, { 'limit': 15 })
-            .then(function(res) {                  
+            .then(function(res) {    
+            	var numsongs = res.body.tracks.items.length;
+            	console.log("num of tracks: %s", numsongs);           
                 
-				for (var i = 0; i < 15; i++) {
+                var max = 15;
+                if(numsongs < max) max = numsongs;
+                
+				for (var i = 0; i < max; i++) {
 					//if(res==undefined) continue;
 					//if(res.body.tracks.item[i] == undefined) continue;
 					var songInfo = {
@@ -117,9 +122,9 @@ io.sockets.on('connection', function(socket){
 
    		var songRequest = data;
 
+   		console.log("time: %s", songRequest.time);
+
 		var roomurl = 'parties/' + songRequest.room;
-
-
 
 		firebase.database().ref(roomurl).once('value').then(function(snapshot) {
 			var room_requests_list = snapshot.val().request_list_id;
@@ -158,20 +163,21 @@ io.sockets.on('connection', function(socket){
 			});
 		});
 
+
 		firebase.database().ref('notifications/').once('value').then(function(snapshot) {
 			var usernotifs = snapshot.val();
 
-			var time = "8:15 PM"
+			//get time information
+			
 
 			var notif = {
 				status: 'Requested',
 				song_name: songRequest.song_name,
 				song_img: songRequest.song_img,
 				song_artist: songRequest.song_artist,
-				song_time: time
+				song_time: songRequest.time
 			}
-			/*new Date();
-			console.log(time.getHours());*/
+			
 			
 			if(!usernotifs.hasOwnProperty(data.user)){
 				console.log("new user!");

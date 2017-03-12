@@ -5,6 +5,8 @@
 	--grayText: #b7b7b7;
 	
 }
+
+/* #40698c */ 
 html {
 	height:100%;
 	width: 100%;
@@ -82,7 +84,7 @@ button:focus {outline:0 !important;}
 /* for the search bar on search page */
 .searchbar{
 	border-bottom: 2px solid black;
-	background-color: #2C4758;
+	background-color: #345470;
 
 }
 
@@ -258,8 +260,14 @@ li {
     border-color: #40698c;
 }
 
-#error { 
-	color: #F08080;
+#error {
+	color: #ff6666;
+	display: inline-block;
+	margin-top: 5px;
+	background: #444444;
+	padding: 4px;
+	border-radius: 10px;
+	border: 2px solid #444444;
 }
 
 /* search results scrolling 
@@ -339,7 +347,7 @@ overflow-y: scroll;
   flex-flow: row nowrap;
   align-items: center;
   text-align: left;
-  background: #345470;
+  background: var(--secondaryBackground);
   font-family:var(--secondaryFont);
   
 }
@@ -362,12 +370,7 @@ overflow-y: scroll;
 	margin-right: 7px;
 }
 
-/* track number */
-.track__number {
-  margin-left: 10px;
-  color: #828282;
-  width: 12px;
-}
+
 .track__songinfo {
   /*display: flex;*/
   flex-flow: column wrap;

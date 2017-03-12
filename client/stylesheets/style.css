@@ -82,7 +82,7 @@ button:focus {outline:0 !important;}
 /* for the search bar on search page */
 .searchbar{
 	border-bottom: 2px solid black;
-	background-color: #2C4758;
+	background-color: #345470;
 
 }
 
@@ -339,7 +339,7 @@ overflow-y: scroll;
   flex-flow: row nowrap;
   align-items: center;
   text-align: left;
-  background: #345470;
+  background: #2C4758;
   font-family:var(--secondaryFont);
   
 }

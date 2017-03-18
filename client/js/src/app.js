@@ -269,6 +269,7 @@ var clearBoxes = function() {
 		document.getElementById(box).value = "";				
 	}
 	document.getElementById("box1").focus();
+	//
 }
 
 

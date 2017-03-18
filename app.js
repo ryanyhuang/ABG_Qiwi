@@ -189,17 +189,21 @@ io.sockets.on('connection', function(socket){
 				console.log(snapshot2.val());
 				var currsong = snapshot2.val();
 
-				var currSongObj = {
-					song_album: currsong.albumTitle,
-					song_name: currsong.title,
-					song_artist: currsong.artist,
-					song_id: currsong.songId,
-					song_img: currsong.lgImageURI,
-					room: data
+				if(currsong != null){
+					var currSongObj = {
+						song_album: currsong.albumTitle,
+						song_name: currsong.title,
+						song_artist: currsong.artist,
+						song_id: currsong.songId,
+						song_img: currsong.lgImageURI,
+						room: data
+					}
+
+					//fn(songObj);
+					socket.emit('currsongupdate', currSongObj);
 				}
 
-				//fn(songObj);
-				socket.emit('currsongupdate', currSongObj);
+				
 
 
 			});

@@ -270,6 +270,7 @@ var clearBoxes = function clearBoxes() {
 		document.getElementById(box).value = "";
 	}
 	document.getElementById("box1").focus();
+	//
 };
 
 /*enters room, need to add room saving functionality*/
